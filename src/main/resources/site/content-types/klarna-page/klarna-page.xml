@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+    <display-name>Klarna Page</display-name>
+    <super-type>base:structured</super-type>
+    <allow-child-content>true</allow-child-content>
+    <form>
+        <input type="ContentSelector" name="name">
+            <label>Page Name</label>
+            <occurrences minimum="0" maximum="1"/>
+        </input>
+    </form>
+</content-type>
