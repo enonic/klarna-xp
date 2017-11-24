@@ -1,0 +1,37 @@
+// Variables
+
+
+
+// Mixins
+
+
+
+
+/* Product Quantity Form*/
+
+.formQtd
+  display: inline-block
+  .product-quantity
+    font-family: $font-heading
+    font-size: 1.4em
+    font-weight: 500
+    color: $gray-dark
+    width: 40px
+    height: 40px
+    border-radius: 0
+    padding: 0
+    text-align: center
+    border: 1px solid $gray-light-2
+  .closeIcon
+    &:hover
+      cursor: pointer
+    &:before
+      content: ""
+      background-image: url("../img/close_button.svg")
+      background-repeat: no-repeat
+      display: inline-block
+      width: 18px
+      height: 18px
+      position: relative
+      top: 3px
+      margin-left: 13px

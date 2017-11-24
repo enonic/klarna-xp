@@ -2,7 +2,7 @@ var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
 var portal = require('/lib/xp/portal');
 
-exports = {
+module.exports = {
     list: list,
     deleteContent: deleteContent,
     createContent: createContent,
@@ -82,6 +82,7 @@ function modifyContent(params) {
     if (!params.editor) throw "Cannot create content. Missing parameter: editor";
     var branch = contextLib.get().branch;
     var modifiedContent;
+    var site = portal.getSite();
     contextLib.run({
         branch: 'draft',
         user: {
@@ -94,6 +95,13 @@ function modifyContent(params) {
             editor: params.editor,
             branch: 'draft'
         });
+
+        if(params.targetPath){
+            modifiedContent = contentLib.move({
+                source: params.id,
+                target: site._path + params.targetPath + "/"+ modifiedContent._name
+            });
+        }
 
         publish(modifiedContent._id, branch);
     });

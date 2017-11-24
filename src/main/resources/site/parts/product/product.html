@@ -1,0 +1,35 @@
+
+<div class="product cart-view">
+    <div class="productImage">
+        <img data-th-src="${imageUrl}" data-th-alt="${displayName}">
+
+        <a data-th-href="'https://www.facebook.com/sharer.php?u='+${contentUrl}" target="_blank"><span class="fb social"></span></a>
+        <a data-th-href="'http://twitter.com/share?text='+${displayName}+'&url='+${contentUrl}" target="_blank"><span class="twitter social"></span></a>
+        <a data-th-href="'https://plus.google.com/share?url='+${contentUrl}" target="_blank"><span class="gplus social"></span></a>
+    </div>
+    <div class="productDetail">
+        <div class="productName">
+            <h2>[[${displayName}]]</h2>
+        </div>
+        <div class="productCheckout">
+            <div class="formQtd">
+                <div class="inputQtd">
+                    <input class="product-quantity no-spinners" data-th-id="'qtyInput_'+${_id}" type="number" min="1" value="1"/>
+                </div>
+            </div>
+            <div class="price">
+                <span class="product-full-price" data-th-classappend="${priceClass}">[[${price}]]</span>
+                <span class="product-discounted-price" data-th-if="${discount}">[[${discountedPrice}]]</span>
+            </div>
+            <a class="ui button greenButton" data-th-attr="data-klarna-cart-add=${addToCart},data-klarna-product-id=${_id}">Buy</a>
+        </div>
+        <div class="productDescription">
+            <p data-th-utext="${description}"></p>
+        </div>
+        <!--<div class="productRecommend">-->
+        <!--<span>Recommend this product:</span>-->
+        <!--<input type="email" placeholder="E-mail">-->
+        <!--<button class="ui blue-outlineButton button" type="button">Send</button>-->
+        <!--</div>-->
+    </div>
+</div>

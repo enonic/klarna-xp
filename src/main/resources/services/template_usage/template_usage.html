@@ -1,0 +1,41 @@
+<html>
+<meta  charset="utf-8" />
+<body>
+
+<h1>Templates</h1>
+<div data-th-each="page: ${components.templates}">
+    <h2>[[${page.key}]]</h2>
+    <p data-th-each="contentPath:${page.value}">
+        [[${contentPath}]]
+    </p>
+</div>
+<hr />
+<br />
+<h1>Pages</h1>
+<div data-th-each="page: ${components.pages}">
+    <h2>[[${page.key}]]</h2>
+    <p data-th-each="contentPath:${page.value}">
+        [[${contentPath}]]
+    </p>
+</div>
+<hr />
+<br />
+<h1>Layouts</h1>
+<div data-th-each="page: ${components.layout}">
+    <h2>[[${page.key}]]</h2>
+    <p data-th-each="contentPath:${page.value}">
+        [[${contentPath}]]
+    </p>
+</div>
+<hr />
+<br />
+<h1>Parts</h1>
+<div data-th-each="page: ${components.part}">
+    <h2>[[${page.key}]]</h2>
+    <p data-th-each="contentPath:${page.value}">
+        [[${contentPath}]]
+    </p>
+</div>
+
+</body>
+</html>

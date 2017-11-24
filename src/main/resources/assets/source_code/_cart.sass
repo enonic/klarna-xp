@@ -1,0 +1,137 @@
+// Variables
+
+
+
+// Mixins
+
+
+
+/* Cart */
+
+.cart
+  &.cart-view.column
+    margin-top: 80px !important
+    h3.ui.header
+      font-family: $font-heading
+      font-size: 2.14rem
+      font-weight: 600
+      color: $gray-dark
+      margin-bottom: 50px
+  .cart-content
+    .items
+      .item
+        .content
+          a.header
+            font-family: $font-heading
+            font-size: 1.5rem
+            font-weight: 500
+            color: $gray-dark
+          .description
+            font-family: $font-heading
+            color: $gray-dark
+
+  table
+    &.ui.table
+      border: 0
+      thead
+        th
+          font-family: $font-heading
+          font-size: 1.42em
+          font-weight: 300 !important
+          border-bottom: 2px solid $gray-light
+          color: $gray-dark
+          background: transparent
+          &:first-child
+            padding-left: 0
+          &:nth-child(2)
+            text-align: center
+          &:nth-child(3)
+            text-align: right
+            padding-right: 0
+      tbody
+        td
+          border-top: 1px solid $gray-light
+          color: $gray-dark
+          &:first-child
+            padding-left: 0
+          &:nth-child(2)
+            text-align: center
+          &:nth-child(3)
+            font-family: $font-heading
+            font-size: 1.715em
+            font-weight: 500
+            text-align: right
+            padding-right: 0
+        tr
+          &:last-child
+            td
+              border-bottom: 1px solid $gray-light
+    @media (max-width: 767px)
+      &.ui:not(.unstackable)
+        tr > td
+          padding-top: 0.7em !important
+          padding-bottom: 0.7em !important
+        @media (max-width: 567px)
+
+    .itemBasket
+      display: -webkit-box
+      display: -webkit-flex
+      display: -ms-flexbox
+      display: flex
+      -webkit-align-items: center
+      align-items: center
+      .smImage
+        background-color: $gray-blue-light
+        width: 80px
+        height: 80px
+        display: inline-block
+        color: $gray-dark
+      .itemName
+        font-family: $font-heading
+        font-size: 1.4em
+        font-weight: 500
+        display: inline-block
+        color: $gray-dark
+        margin-left: 25px
+        a
+          color: $gray-dark
+          &:hover
+            color: $blue-tiffany
+
+  .total
+    font-family: $font-heading
+    font-size: 1.785rem
+    font-weight: 600
+    text-align: right
+    margin-top: 70px
+    span
+      font-weight: 400
+
+  .checkoutArea
+    font-family: $font-heading
+    font-weight: 500
+    font-size: 1.714rem
+    text-align: right
+    margin-top: 90px
+    margin-bottom: 4em
+    a
+      &:first-child
+        color: $gray-dark
+        font-weight: 300
+        display: inline-block
+        margin-right: 20px
+        border-bottom: 1px solid $gray-dark
+        padding-bottom: 4px
+        &:hover
+          border-bottom: 0
+        @media (max-width: 480px)
+          margin-bottom: 30px
+    a.ui.button.greenButton
+      font-size: 1.714rem
+      margin-left: 20px
+
+  .empty-cart-message
+    font-family: $font-heading
+    font-size: 1.4rem
+    font-weight: 400
+    color: $gray-dark

@@ -1,31 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Enonic Academy</title>
-	<link rel="stylesheet" data-th-href="${portal.assetUrl({'_path=css/main.css'})}"/>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="theme-color" content="#ffffff">
+
+	<title>[[${siteName}]]</title>
+
+	<!-- Styles -->
+	<link data-th-href="${faviconUrl}" rel="icon" type="image/png" />
+	<link data-th-each="css:${componentsCss}" data-th-href="${css}" rel="stylesheet" type="text/css"/>
+	<!-- Common lib -->
+	<script data-th-each="script:${componentsJs}" data-th-src="${script}" type="text/javascript"></script>
+
+	<link rel="icon" type="image/svg" sizes="any" data-th-href="${faviconUrl}"/>
 </head>
-<body class="xp-page">
-
-	<header>
-		<h1 data-th-text="${siteName}">Enonic Academy</h1>
-	</header>
-
-	<div data-portal-region="main" class="xp-region" data-th-if="${!isFragment}">
-		<div data-th-if="${mainRegion}" data-th-remove="tag">
-			<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
-				<div data-portal-component="${component.path}" data-th-remove="tag"></div>
+<body>
+	<nav class="nav ui menu visible">
+		<div class="ui container">
+			<a class="item" data-th-each="menuItem:${menu}" data-th-href="${menuItem.url}" data-th-classappend="${menuItem.class}">
+				[[${menuItem.name}]]
+			</a>
+			<div class="header item">
+				<a data-th-href="${siteUrl}">
+					<img data-th-src="${klarnaIcon}" />
+				</a>
+				<!--<a data-th-href="${siteUrl}">-->
+				<!--&nbsp;&nbsp;[[${siteName}]]-->
+				<!--</a>-->
+			</div>
+			<div class="right menu">
+				<div data-th-remove="tag" data-th-each="menuItem:${rightMenu}">
+					<a class="ui item icon" data-th-classappend="${menuItem.navClass}" data-th-href="${menuItem.link}">
+						<div class="ui label">
+							<i data-th-class="${menuItem.icon}"></i>
+							<span id="cartQty" data-th-text="${itemCount}" data-th-if="${menuItem.cartQty}"></span>
+							<span class="iconName" data-th-if="${menuItem.label}">[[${menuItem.label}]]</span>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
+	</nav>
+	<main class="pusher">
+		<div class="full height body" style="padding-top: 0;">
+			<div data-portal-region="main">
+				<!--REPLACE-->
+				<div class="ui stackable container very relaxed grid">
+					<div class="column" style="padding-top: 0 !important;">
+						<div class="xp-region" data-th-if="${!isFragment}">
+							<div data-th-if="${mainRegion}" data-th-remove="tag">
+								<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
+									<div data-portal-component="${component.path}" data-th-remove="tag"></div>
+								</div>
+							</div>
+						</div>
+						<div class="field hidden" id="loading">
+							<div class="ui active inverted dimmer">
+								<div class="ui text loader">Loading</div>
+							</div>
+							<p></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	<!--/* Render Fragments (single view, supported with mappings in site.xml) */-->
-	<div data-th-if="${isFragment}" data-th-remove="tag">
-		<div data-portal-component="fragment" data-th-remove="tag"/>
-	</div>
 
-	<footer>
-		<p>Copyright forever</p>
+	</main>
+	<footer class="ui vertical footer segment">
+		<div class="ui container stackable two column grid">
+			<div class="column">
+				<h4>Company X</h4>
+				<p>
+					+1 804 1234567 | email@company.com <br>
+					123 main St. <br>
+					City, IL 60626
+				</p>
+			</div>
+			<div class="column">
+				<h4>Get to Know Us</h4>
+				<a class="item" target="_blank">Copyright &copy; Seeds Consulting 2017</a>
+				<br><br>
+				<p><a href="">sign up</a></p>
+			</div>
+		</div>
+		<!--<div class="ui center aligned container">-->
+			<!--<div class="ui inverted section divider"></div>-->
+			<!--<img data-th-src="${klarnaIcon}" class="ui centered mini image" />-->
+
+			<!--<div class="ui horizontal inverted small divided link list">-->
+				<!--<a class="item" target="_blank">Copyright &copy; Seeds Consulting 2017</a>-->
+			<!--</div>-->
+		<!--</div>-->
 	</footer>
-
 </body>
 </html>

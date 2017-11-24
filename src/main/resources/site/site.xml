@@ -1,15 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
   <config>
-	  <!-- Insert site-wide settings here -->
-	  <!-- Mixin of the type "inline" goes here -->
-  </config>
-  <!-- Mixin of the type "x-data" goes here -->
+    <input name="merchant_id" type="TextLine">
+      <label>Merchant ID</label>
+      <occurrences minimum="1" maximum="1"/>
+      <help-text></help-text>
+    </input>
 
-  <!-- Used for Fragments to work, a XP Content Studio -->
+    <input name="secret_key" type="TextLine">
+      <label>Merchant Secret Key</label>
+      <occurrences minimum="1" maximum="1"/>
+      <help-text></help-text>
+    </input>
+
+    <input name="purchase_country" type="RadioButton">
+      <label>Purchase Country</label>
+      <occurrences minimum="1" maximum="1"/>
+      <help-text></help-text>
+      <default>NO</default>
+      <config>
+        <option value="AU">Austria</option>
+        <option value="DK">Denmark</option>
+        <option value="FI">Finland</option>
+        <option value="DE">Germany</option>
+        <option value="NL">Netherlands</option>
+        <option value="NO">Norway</option>
+        <option value="SE">Sweden</option>
+      </config>
+    </input>
+
+    <input name="purchase_currency" type="RadioButton">
+      <label>Purchase Currency</label>
+      <occurrences minimum="1" maximum="1"/>
+      <help-text></help-text>
+      <default>NOK</default>
+      <config>
+        <option value="EUR">Euro</option>
+        <option value="DKK">Danish Crowns (DKK)</option>
+        <option value="NOK">Norwegian Crowns (NOK)</option>
+        <option value="SEK">Swedish Crowns (SEK)</option>
+      </config>
+    </input>
+
+    <input name="page_terms" type="ContentSelector">
+      <label>Terms Page</label>
+      <help-text></help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationshipType>system:reference</relationshipType>
+        <!--<allowContentType>tag</allowContentType>-->
+      </config>
+    </input>
+
+    <input name="page_cart" type="ContentSelector">
+      <label>Cart Page</label>
+      <help-text></help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationshipType>system:reference</relationshipType>
+        <!--<allowContentType>tag</allowContentType>-->
+      </config>
+    </input>
+
+    <input name="page_checkout" type="ContentSelector">
+      <label>Checkout Page</label>
+      <help-text></help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationshipType>system:reference</relationshipType>
+        <!--<allowContentType>tag</allowContentType>-->
+      </config>
+    </input>
+
+    <input name="page_confirmation" type="ContentSelector">
+      <label>Confirmation Page</label>
+      <help-text></help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationshipType>system:reference</relationshipType>
+        <!--<allowContentType>tag</allowContentType>-->
+      </config>
+    </input>
+  </config>
   <mappings>
     <mapping controller="/site/pages/default/default.js">
       <match>type:'portal:fragment'</match>
     </mapping>
   </mappings>
+  <filters>
+    <response-filter name="klarna-data" order="10"/>
+  </filters>
+
 </site>

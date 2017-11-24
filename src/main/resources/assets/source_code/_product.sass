@@ -1,0 +1,109 @@
+// Variables
+
+
+
+// Mixins
+
+
+
+
+/* Product */
+
+.product
+  display: -webkit-box
+  display: -webkit-flex
+  display: -ms-flexbox
+  display: flex
+  margin-top: 80px
+  margin-bottom: 80px
+  font-size: 1.214rem
+  @media (max-width: 567px)
+    flex-wrap: wrap
+    -webkit-flex-wrap: wrap
+    justify-content: center
+    -webkit-justify-content: center
+  .productImage
+    width: 250px
+    height: 250px
+    background-color: $gray-blue-light
+    flex-shrink: 0
+    margin-right: 80px
+    display: block
+    position: relative
+    @media (max-width: 567px)
+      margin-right: 0
+      margin-bottom: 100px
+    @media (min-width: 568px) and (max-width: 767px)
+      margin-right: 30px
+    .social
+      content: ""
+      width: 30px
+      height: 30px
+      display: inline-block
+      position: absolute
+      bottom: -55px
+      &:hover
+        cursor: pointer
+    .fb
+      background-image: url("../img/facebook_icon.svg")
+      left: 20%
+    .twitter
+      background-image: url("../img/twitter_icon.svg")
+      left: 45%
+    .gplus
+      background-image: url("../img/googleplus_icon.svg")
+      right: 20%
+  .productDetail
+    .productName
+      font-family: $font-heading
+      font-size: 1.785rem
+      font-weight: 600
+      color: $gray-dark
+      margin-bottom: 36px
+    .productCheckout
+      display: -webkit-box
+      display: -webkit-flex
+      display: -ms-flexbox
+      display: flex
+      align-items: center
+      -webkit-align-items: center
+      margin-bottom: 36px
+      padding-bottom: 36px
+      border-bottom: 1px solid $gray-light
+      .formQtd
+        margin-right: 26px
+      .price
+        font-family: $font-heading
+        font-size: 1.6rem
+        font-weight: 600
+        color: $gray-dark
+        margin-right: 26px
+        .product-full-price.discounted
+          margin-right: 15px
+      .ui.button.greenButton
+        padding: 0.43em 0.86em
+        font-size: 1.714rem
+    .productDescription
+      border-bottom: 1px solid $gray-light
+      margin-bottom: 36px
+      padding-bottom: 36px
+      h3
+        font-family: $font-heading
+        font-size: 1.214rem
+        font-weight: 600
+    .productRecommend
+      span
+        font-family: $font-heading
+        font-size: 1.428rem
+        font-weight: 600
+        color: $gray-dark
+        margin-right: 30px
+        margin-bottom: 26px
+        display: inline-block
+        @media (max-width: 1199px)
+          display: block
+      input
+        margin-bottom: 26px
+      .blue-outlineButton.ui.button
+        font-size: 1.428rem
+        font-weight: 600

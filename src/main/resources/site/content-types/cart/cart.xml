@@ -8,12 +8,18 @@
             <label>Session</label>
             <occurrences minimum="0" maximum="1"/>
         </input>
-        <input type="ContentSelector" name="customer">
-            <label>Customer</label>
+        <input type="TextLine" name="klarna_order_id">
+            <label>Klarna Order ID</label>
             <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="RadioButton" name="status">
+            <label>Status</label>
+            <occurrences minimum="1" maximum="1"/>
             <config>
-                <relationship>system:reference</relationship>
-                <allowType>no.iskald.payup:customer</allowType>
+                <option value="open_cart">Open Cart</option>
+                <option value="checkout_incomplete">Checkout Incomplete</option>
+                <option value="checkout_complete">Checkout Completed</option>
+                <option value="created">Created</option>
             </config>
         </input>
         <item-set name="items">
@@ -28,7 +34,7 @@
                     <occurrences minimum="1" maximum="1"/>
                     <config>
                         <relationship>system:reference</relationship>
-                        <allowType>no.iskald.payup:product</allowType>
+                        <allowType>product</allowType>
                     </config>
                 </input>
             </items>

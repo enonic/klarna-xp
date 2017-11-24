@@ -1,0 +1,78 @@
+// Variables
+
+
+
+// Mixins
+
+
+
+
+/* Cards */
+
+.ui.cards
+  margin-bottom: 80px
+  > .card
+    border-radius: 0
+    border: 1px solid $gray-light
+    -webkit-box-shadow: none
+    -moz-box-shadow:  none
+    box-shadow:  none
+
+    &:first-child, > :first-child
+      border-radius: 0 !important
+
+    > .image
+      a > img
+        display: block
+        width: 100%
+        height: auto
+
+    > .content
+      a.header, .header:not(.ui)
+        font-family: $font-heading
+        color: $gray-dark
+        font-weight: 600
+        &:hover
+          color: $blue-tiffany
+
+      .meta > span
+        font-family: $font-heading
+        color: $gray-dark
+
+    .ui.button.greenButton
+      float: right
+      padding: 0.43em 0.86em
+      font-size: 1rem
+      margin-right: 0
+
+    .ui.dark-red.label
+      font-family: $font-heading
+      font-weight: 600
+      background-color: $red-dark
+      color: $white
+      border-radius: 0
+      &:after
+        border-right-color: $red-shade
+
+  &.four
+    @media (min-width: 481px) and (max-width: 767px)
+      &.stackable
+        display: -webkit-box !important
+        display: -webkit-flex !important
+        display: -ms-flexbox !important
+        display: flex !important
+        > .card
+          width: calc(50% - 2em) !important
+          &:first-child
+            margin-top: 1em !important
+    > .card
+      @media (min-width: 768px) and (max-width: 991px)
+        width: calc(50% - 1.5em) !important
+
+.product-full-price.discounted
+  text-decoration: line-through
+
+.pri
+.product-discounted-price
+  font-weight: bold
+  color: #ca493e !important

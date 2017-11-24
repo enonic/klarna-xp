@@ -1,0 +1,87 @@
+/* ::::: Author: Esther Morais ::::: */
+
+// Variables
+
+$font-body: 'Open Sans', sans-serif
+$font-heading: 'Raleway', sans-serif
+$blue-tiffany: #4bc3c9
+$red-dark: #ca493e
+$red-shade: #a73a30
+$white: #fff
+$green-spring: #58c22e
+$green-spring-slightly-dark: #56b22e
+$gray-light: #e6e7e8
+$gray-light-2: #bcbec0
+$gray-dark: #3c3a3b
+$gray-blue-light: #e6eff3
+
+// Mixins
+
+
+
+/* General */
+
+html, body
+  font-family: $font-body
+
+h1,h2,h3,h4,h5,h6
+  font-family: $font-heading
+  font-weight: 700
+
+a
+  color: $blue-tiffany
+
+
+/* Page Heading */
+
+.pageHeading
+  h2
+    font-family: $font-heading
+    font-weight: 600
+    color: $gray-dark
+    text-align: center
+    margin-top: 60px
+    margin-bottom: 30px
+
+
+/* Input */
+
+input
+  font-family: $font-heading
+  font-size: 1.214rem
+  font-weight: 300
+  border: 1px solid $gray-light
+  padding: .9em
+  margin-right: 16px
+
+
+/* Buttons */
+
+.greenButton.ui.button
+  background-color: $green-spring
+  color: $white
+  font-family: $font-heading
+  font-weight: normal
+  border-radius: 0
+  &:hover
+    background-color: $green-spring-slightly-dark
+
+.blue-outlineButton.ui.button
+  background-color: transparent
+  color: $blue-tiffany
+  border: 1px solid $blue-tiffany
+  font-family: $font-heading
+  border-radius: 0px
+  &:hover
+    background-color: $blue-tiffany
+    color: $white
+
+
+/* hide up/down arrows ("spinners") on input fields marked */
+
+.no-spinners
+  -moz-appearance: textfield
+  &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+   

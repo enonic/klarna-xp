@@ -2,7 +2,7 @@ var authLib = require('/lib/xp/auth');
 var contentLib = require('/lib/xp/content');
 var contentHelper = require('contentHelper');
 
-exports = {
+module.exports = {
     getCustomer: getCustomer,
     updateAddress: updateAddress
 };

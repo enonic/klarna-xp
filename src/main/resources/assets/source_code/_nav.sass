@@ -1,0 +1,125 @@
+// Variables
+
+
+
+// Mixins
+
+
+
+/* Nav */
+
+.ui.nav
+  background-color: $blue-tiffany
+  border: 0
+  border-radius: 0
+  padding: 0
+  box-shadow: none
+  -webkit-box-shadow: none
+
+  .header.item
+    padding-top: 1.85em
+    border-left: 0 !important
+    @media (min-width: 768px)
+      padding-left: 0
+    &:before
+      display: none
+    img
+      width: 7.2em
+      filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+      -webkit-filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+
+  .right.menu
+    a.ui.cartNav
+      &:only-child, &:nth-child(3)
+        padding-right: 0
+      &:before
+        display: none
+      &:hover
+        background: none
+
+  .ui.cartNav
+    opacity: 0.55
+    &.active
+      background: transparent
+      opacity: 1
+    .ui.label
+      background: transparent
+      position: relative
+      .cartIcon, .bagIcon, .identidyIcon, .paymentIcon
+        display: inline-block
+        position: relative
+        width: 3em
+        height: 3em
+        text-align: center
+        vertical-align: bottom
+        &:before
+          content: ""
+          background-repeat: no-repeat
+          display: inline-block
+          filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+          -webkit-filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+      .cartIcon
+        &:before
+          background-image: url("../img/cart.svg")
+          width: 45px
+          height: 43px
+      .bagIcon
+        bottom: -5px
+        &:before
+          background-image: url("../img/bag.svg")
+          width: 30px
+          height: 40px
+          vertical-align: bottom
+      .identidyIcon
+        bottom: -5px
+        &:before
+          background-image: url("../img/identidy.svg")
+          width: 29px
+          height: 35px
+          vertical-align: bottom
+      .paymentIcon
+        bottom: -5px
+        width: 2.3em
+        &:before
+          background-image: url("../img/payment.svg")
+          width: 30px
+          height: 40px
+          vertical-align: bottom
+
+      .iconName
+        font-family: $font-heading
+        font-weight: 400
+        font-size: 1.4rem
+        filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+        -webkit-filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.2))
+
+      #cartQty
+        position: absolute
+        top: 10%
+        right: 20%
+        background-color: $red-dark
+        border-radius: 100%
+        width: 1.5em
+        height: 1.5em
+        line-height: 1.5em
+        display: inline-block
+        text-align: center
+        @supports (-ms-ime-align: auto)
+          line-height: 16px
+        @supports (-ms-accelerator: true)
+          line-height: 16px
+        @media screen\0
+          line-height: 16px
+        @supports (-moz-appearance: none) and (display: contents)
+          line-height: 16px
+
+  @media (max-width: 599px)
+    .ui.cartNav
+      padding: 0
+      &:only-child
+        .ui.label
+          margin-right: 1em
+      .ui.label
+        margin-left: 0
+        .iconName
+          display: none

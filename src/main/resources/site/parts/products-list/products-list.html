@@ -1,0 +1,47 @@
+<div class="categoriesMenu">
+    <div class="categoryLink" data-th-each="category:${categories}" >
+        <a class="" data-th-href="${category.url}" data-th-classappend="${category.class}">
+            &rsaquo; [[${category.name}]]
+        </a>
+    </div>
+</div>
+
+<div class="pageHeading">
+    <h2>
+        [[${pageName}]]
+    </h2>
+</div>
+
+<div class="ui four stackable cards cart-view">
+    <div class="card" data-th-each="product:${products}">
+        <div class="image">
+            <!--<div class="ui dimmer">-->
+                <!--<div class="content">-->
+                    <!--<div class="center">-->
+                        <!--<h3 class="ui inverted header">[[${product.price}]]</h3>-->
+
+                        <!--&lt;!&ndash;<a class="ui inverted button" data-th-href="${product.productViewUrl}">[[${msg.view_product}]]</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="ui inverted button" data-th-attr="data-klarna-cart-add=${product.addToCart}">[[${msg.buy}]]</div>&ndash;&gt;-->
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="ui fluid image">
+                <div class="ui dark-red ribbon label" data-th-if="${product.discount}">
+                   [[${product.discount}]]
+                </div>
+            </div>
+            <a data-th-href="${product.productViewUrl}">
+                <img data-th-src="${product.imageUrl}" />
+            </a>
+        </div>
+        <div class="content">
+            <a class="header" data-th-href="${product.productViewUrl}">[[${product.name}]]</a>
+            <div class="meta">
+                <span class="product-full-price" data-th-classappend="${product.priceClass}">[[${product.price}]]</span>
+                <span class="product-discounted-price" data-th-if="${product.discount}">[[${product.discountedPrice}]]</span>
+            </div>
+            <a class="ui button greenButton" data-th-attr="data-klarna-cart-add=${product.addToCart}">[[${msg.buy}]]</a>
+        </div>
+    </div>
+</div>

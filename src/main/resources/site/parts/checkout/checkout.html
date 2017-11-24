@@ -1,0 +1,43 @@
+
+<div class="column cart-view">
+    <h3 class="ui header">
+        Shopping Cart
+    </h3>
+    <div class="cart-content">
+        <div class="ui divided items " th:if="${cart != null and not #lists.isEmpty(items)}">
+            <div class="item" data-th-each="item : ${items}">
+                <div class="ui tiny image">
+                    <img data-th-if="${item.product.imageUrl}" data-th-src="${item.product.imageUrl}">
+                </div>
+                <div class="middle aligned content">
+                    <a class="header" style="width: 100%;">
+                        [[${item.product.displayName}]]
+                        <div class="right floated content" >
+                            <div class="ui button" data-th-attr="data-klarna-cart-add=${item.addToCart}">Add</div>
+                            <div class="ui button" data-th-attr="data-klarna-cart-add=${item.removeFromCart}">Remove</div>
+                        </div>
+                    </a>
+                    <div class="description">
+                        Price: [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]
+                        Quantity: [[${item.quantity}]]
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="ui tiny image">
+                </div>
+                <h3 class="ui header" style="width: 100%;">
+                    Total: [[${totalPrice}]]
+                    <div class="right floated content" >
+                        <a class="ui button" href="?action=checkout">Checkout</a>
+                    </div>
+                </h3>
+            </div>
+        </div>
+        <div class="empty-cart-message" th:if="${#lists.isEmpty(items)}">
+            Empty cart
+        </div>
+    </div>
+</div>

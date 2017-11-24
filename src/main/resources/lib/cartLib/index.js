@@ -1,10 +1,12 @@
 var contentLib = require('/lib/xp/content');
+var portalLib = require('/lib/xp/portal');
 var contentHelper = require('contentHelper');
 
-exports = {
+module.exports = {
     getCartFromCustomer: getCartFromCustomer,
     getCartFromSession: getCartFromSession,
     addToCartQuantity: addToCartQuantity,
+    updateCartQuantity: updateCartQuantity,
     removeFromCart: removeFromCart,
     getCartItems: getCartItems,
     archiveCart: archiveCart,
@@ -64,6 +66,66 @@ function addToCartQuantity(cartId, quantity, productId) {
     });
 }
 
+function updateCartQuantity(cartId, quantity, productId) {
+    if (!cartId) throw "Cannot add to cart. Missing parameter: cartId";
+    if (!quantity) throw "Cannot add to cart. Missing parameter: quantity";
+    if (!productId) throw "Cannot add to cart. Missing parameter: productId";
+
+    function editor(c) {
+        var currentData = c.data.items;
+
+        if (!currentData) {
+            c.data.items = {
+                "product": productId,
+                "quantity": quantity
+            }
+        } else {
+            if (!Array.isArray(c.data.items)) {
+                if (c.data.items.product == productId) {
+                    var currentQuantity = parseInt(c.data.items["quantity"]);
+                    if (parseInt(quantity) == 0) {
+                        c.data.items = null;
+                    } else {
+                        c.data.items["quantity"] = parseInt(quantity);
+                    }
+                } else {
+                    var array = [];
+                    array.push(c.data.items);
+                    array.push({
+                        "product": productId,
+                        "quantity": quantity
+                    });
+                    c.data.items = array;
+                }
+            } else {
+                var exists = false;
+                c.data.items.forEach(function(item, index) {
+                    if (item.product == productId) {
+                        var currentQuantity = parseInt(item.quantity);
+                        if(currentQuantity == 0){
+                            data.items[index] = null;
+                        } else {
+                            item.quantity = parseInt(quantity);
+                        }
+                        exists = true;
+                    }
+                });
+                if (!exists) {
+                    c.data.items.push({
+                        "product": productId,
+                        "quantity": quantity
+                    })
+                }
+            }
+        }
+        return c;
+    }
+
+    contentHelper.modifyContent({
+        id: cartId,
+        editor: editor
+    });
+}
 
 function removeFromCart(cartId, quantity, productId) {
     if (!cartId) throw "Cannot remove from cart. Missing parameter: cartId";
@@ -78,7 +140,7 @@ function removeFromCart(cartId, quantity, productId) {
             if (!Array.isArray(c.data.items)) {
                 if (c.data.items.product == productId) {
                     var currentQuantity = parseInt(c.data.items["quantity"]);
-                    var newQuantity = currentQuantity - parseInt(quantity);
+                    var newQuantity = currentQuantity - (quantity == "all" ? currentQuantity : parseInt(quantity));
                     if (newQuantity == 0) {
                         c.data.items = null;
                     } else {
@@ -89,7 +151,7 @@ function removeFromCart(cartId, quantity, productId) {
                 c.data.items.forEach(function(item, index) {
                     if (item.product == productId) {
                         var currentQuantity = parseInt(item.quantity);
-                        var newQuantity = currentQuantity - parseInt(quantity);
+                        var newQuantity = currentQuantity - (quantity == "all" ? currentQuantity : parseInt(quantity));
                         if (newQuantity == 0) {
                             c.data.items[index] = null;
                         } else {
@@ -113,7 +175,7 @@ function getCartFromCustomer(customer) {
     var cartResult = contentLib.query({
         query: "data.customer = '" + customer._id + "'",
         contentTypes: [
-            'no.iskald.payup:cart'
+            app.name+':cart'
         ]
     });
 
@@ -131,9 +193,9 @@ function getCartFromCustomer(customer) {
 function getCartFromSession(sessionId) {
     if (!sessionId) return;
     var cartResult = contentLib.query({
-        query: "data.session = '" + sessionId + "'",
+        query: "data.session = '" + sessionId + "' AND (data.status IN ('open_cart', 'checkout_incomplete'))",
         contentTypes: [
-            'no.iskald.payup:cart'
+            app.name+':cart'
         ]
     });
 
@@ -164,13 +226,15 @@ function createCart(context) {
 
 function createCartForSession(sessionId) {
     if (!sessionId) throw "Cannot create cart. Missing parameter: sessionId";
+    var date = new Date();
     var params = {
-        name: 'cart-' + sessionId,
+        name: 'cart-' + sessionId+"-"+date.getTime(),
         displayName: 'sessioncart-' + sessionId,
         path: '/shopping-carts',
         type: 'cart',
         data: {
-            session: sessionId
+            session: sessionId,
+            status: "open_cart"
         }
     };
     var cart = contentHelper.createContent(params);
@@ -203,13 +267,33 @@ function getCartItems(cart) {
             var product = contentLib.get({
                 key: item.product
             });
-            var price = product.data.price * item.quantity;
 
-            items.push({
-                product: product,
-                price: price,
-                quantity: item.quantity
-            });
+            if(product) {
+                product.url = portalLib.pageUrl({
+                    id: product._id,
+                    type: "absolute"
+                });
+
+                if (product.data.image) {
+                    product.imageUrl = portalLib.imageUrl({
+                        id: product.data.image,
+                        scale: 'width(250)',
+                        format: 'jpeg'
+                    });
+                }
+                var price;
+                if(product.data.discount_rate){
+                    price = (product.data.unit_price - (product.data.unit_price * (product.data.discount_rate/100))) * item.quantity
+                } else {
+                    price = product.data.unit_price * item.quantity;
+                }
+
+                items.push({
+                    product: product,
+                    price: price,
+                    quantity: item.quantity
+                });
+            }
         });
     }
     return items;

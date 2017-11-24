@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 20.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Camada_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 250 250" style="enable-background:new 0 0 250 250;" xml:space="preserve">
+<style type="text/css">
+	.Sombra{fill:none;}
+	.Cantos_x0020_arredondados_x0020__x002D__x0020_2_x0020_pontos{fill:#FFFFFF;stroke:#231F20;stroke-miterlimit:10;}
+	.Reflexo_x0020_X_x0020_em_x0020_tempo_x0020_real{fill:none;}
+	.Chanfro_x0020_suave{fill:url(#SVGID_1_);}
+	.Anoitecer{fill:#FFFFFF;}
+	.Foliage_GS{fill:#FFDD00;}
+	.Pompadour_GS{fill-rule:evenodd;clip-rule:evenodd;fill:#44ADE2;}
+	.st0{fill:#FFFFFF;}
+</style>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0.7071" y2="0.7071">
+	<stop  offset="0" style="stop-color:#DEDFE3"/>
+	<stop  offset="0.1783" style="stop-color:#DADBDF"/>
+	<stop  offset="0.3611" style="stop-color:#CECFD3"/>
+	<stop  offset="0.546" style="stop-color:#B9BCBF"/>
+	<stop  offset="0.7324" style="stop-color:#9CA0A2"/>
+	<stop  offset="0.9181" style="stop-color:#787D7E"/>
+	<stop  offset="1" style="stop-color:#656B6C"/>
+</linearGradient>
+<g>
+	<circle class="st0" cx="124.9" cy="61.8" r="60.3"/>
+	<path class="st0" d="M124.9,130.7c-57.1,0-103.4,46.3-103.4,103.4c25,7.4,60.8,15.1,104.4,14.9c42.6-0.1,77.7-7.7,102.4-14.9
+		c0-8.1-1.1-41.2-26.9-69.6C171.2,131.3,131.1,130.7,124.9,130.7z"/>
+</g>
+</svg>

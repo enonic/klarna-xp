@@ -1,0 +1,51 @@
+
+<div class="cart column cart-view">
+	<div class="cart-content">
+		<h3 class="ui header">
+			Shopping Cart
+		</h3>
+		<div data-th-remove="tag" th:if="${cart != null and not #lists.isEmpty(items)}">
+			<table class="ui table">
+				<thead>
+				<tr>
+					<th>Item(s)</th>
+					<th>Quantity</th>
+					<th>Price</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr data-th-each="item : ${items}">
+					<td>
+						<div class="itemBasket">
+							<a data-th-href="${item.product.url}">
+								<img data-th-if="${item.product.imageUrl}" data-th-src="${item.product.imageUrl}" class="smImage">
+							</a>
+							<p class="itemName"><a data-th-href="${item.product.url}">[[${item.product.displayName}]]</a></p>
+						</div>
+					</td>
+					<td>
+						<div class="formQtd">
+							<div class="inputQtd">
+								<input class="product-quantity cart-input no-spinners" type="number" min="1" data-th-attr="value=${item.quantity},data-klarna-cart-update=${item.updateQuantity}"/>
+								<i class="closeIcon" data-th-attr="data-klarna-cart-add=${item.removeFromCart}"></i>
+							</div>
+						</div>
+					</td>
+					<td>[[${currency}]] [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</td>
+				</tr>
+				</tbody>
+			</table>
+			<div class="total">
+				<span>Total: </span>[[${totalPrice}]]
+			</div>
+			<div class="checkoutArea">
+				<a data-th-href="${backToStore}">Add more items</a>
+				or
+				<a class="ui button greenButton" data-th-href="${checkoutUrl}">Checkout</a>
+			</div>
+		</div>
+		<div class="empty-cart-message" th:if="${#lists.isEmpty(items)}">
+			Empty cart <i class="shop icon"></i>
+		</div>
+	</div>
+</div>

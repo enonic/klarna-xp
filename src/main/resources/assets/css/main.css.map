@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAOQ,8DAAsD;AACtD,gEAAwD;;ACNhE,UAAU;EACR,WAAW,EAAE,uBAAuB;;ACHtC,IAAI;EACF,gBAAgB,EAAE,kBAAkB;EACpC,MAAM,EAAE,YAAY;EACpB,aAAa,EAAE,IAAI;;ACHrB,OAAO;EACL,gBAAgB,EAAE,kBAAkB",
+"sources": ["../source_code/main.sass","../source_code/_base.sass","../source_code/_nav.sass","../source_code/_footer.sass"],
+"names": [],
+"file": "main.css"
+}
