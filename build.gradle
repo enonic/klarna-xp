@@ -5,14 +5,20 @@ buildscript {
         maven {
             url 'http://repo.enonic.com/public'
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
         classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.1.1"
     }
 }
 
+apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
+apply plugin: "com.moowork.grunt"
 
 app {
     name = project.appName
@@ -21,23 +27,44 @@ app {
     vendorUrl = 'http://enonic.com'
 }
 
-// This is where we "Install" new libraries. Check correct path in our docs, or the libs github readme.
 dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-content:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
     include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
-    include 'org.codehaus.jackson:jackson-mapper-asl:1.8.5'
-    // https://mvnrepository.com/artifact/com.klarna/kco-rest
-    compile group: 'com.klarna', name: 'kco-rest', version: '2.2.0'
-    include 'com.klarna:com.klarna.rest.api.model'
+    include "com.enonic.xp:lib-xslt:${xpVersion}"
+    include "com.enonic.xp:lib-i18n:${xpVersion}"
+    include 'com.enonic.lib:util:1.1.1'
+    include "com.enonic.xp:lib-auth:${xpVersion}"
+    include "com.enonic.xp:lib-http-client:${xpVersion}"
+    //include "com.enonic.xp:lib-mustache:${xpVersion}"
+    //include "com.enonic.xp:lib-i18n:${xpVersion}"
+    include "com.enonic.xp:lib-cache:${xpVersion}"
+    include "com.enonic.xp:lib-context:${xpVersion}"
+    //include "com.enonic.xp:lib-io:${xpVersion}"
+    include "com.enonic.xp:lib-mail:${xpVersion}"
+    include "com.enonic.xp:lib-websocket:${xpVersion}"
+    include "com.cronutils:cron-utils:5.0.4"
+    include 'commons-codec:commons-codec:1.10'
+    include 'org.apache.httpcomponents:httpclient:4.5.3'
+	include 'com.klarna:java-checkout:3.0.0'
+	include 'org.codehaus.jackson:jackson-mapper-asl:1.8.5'
 }
 
 repositories {
     mavenLocal()
+    mavenCentral()
     jcenter()
     maven {
         url 'http://repo.enonic.com/public'
     }
+}
+
+sourceSets {
+    main {
+        java {
+            exclude 'node_modules/**'
+       }
+   }
 }
