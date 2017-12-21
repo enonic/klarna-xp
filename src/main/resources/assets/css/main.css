@@ -32,7 +32,7 @@ input {
 /* Buttons */
 .greenButton.ui.button {
   background-color: #58c22e;
-  color: #fff;
+  color: white;
   font-family: "Raleway", sans-serif;
   font-weight: normal;
   border-radius: 0; }
@@ -47,7 +47,7 @@ input {
   border-radius: 0px; }
   .blue-outlineButton.ui.button:hover {
     background-color: #4bc3c9;
-    color: #fff; }
+    color: white; }
 
 /* hide up/down arrows ("spinners") on input fields marked */
 .no-spinners {
@@ -201,7 +201,7 @@ input {
       font-family: "Raleway", sans-serif;
       font-weight: 600;
       background-color: #ca493e;
-      color: #fff;
+      color: white;
       border-radius: 0; }
       .ui.cards > .card .ui.dark-red.label:after {
         border-right-color: #a73a30; }
@@ -360,6 +360,13 @@ input {
   font-weight: 400;
   color: #3c3a3b; }
 
+.ui.klarna.list {
+  width: 100%;
+  display: table; }
+  .ui.klarna.list .item {
+    width: 50%;
+    display: inline-block; }
+
 /* Product Quantity Form */
 .formQtd {
   display: inline-block; }
@@ -404,7 +411,7 @@ input {
       -webkit-justify-content: center; } }
   .product .productImage {
     width: 250px;
-    height: 250px;
+    height: 1%;
     background-color: #e6eff3;
     flex-shrink: 0;
     margin-right: 80px;
@@ -459,7 +466,7 @@ input {
       font-weight: 600;
       color: #3c3a3b;
       margin-right: 26px; }
-      .product .productDetail .productCheckout .price .product-full-price discounted {
+      .product .productDetail .productCheckout .price .product-full-price.discounted {
         margin-right: 15px; }
     .product .productDetail .productCheckout .ui.button.greenButton {
       padding: 0.43em 0.86em;
@@ -492,12 +499,12 @@ input {
 /* Footer */
 .ui.footer.segment {
   background-color: #4bc3c9;
-  color: #fff;
+  color: white;
   padding-top: 2.5em;
   padding-bottom: 5em;
   border-bottom: 0; }
   .ui.footer.segment a {
-    color: #fff; }
+    color: white; }
   .ui.footer.segment .ui.container.stackable.two.column.grid > .column {
     max-width: 300px; }
     .ui.footer.segment .ui.container.stackable.two.column.grid > .column h4 {
@@ -511,5 +518,3 @@ input {
     .ui.footer.segment .ui.container.stackable.two.column.grid > .column:nth-child(2) {
       margin-left: auto;
       max-width: 250px; }
-
-/*# sourceMappingURL=main.css.map */

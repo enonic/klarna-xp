@@ -1,4 +1,3 @@
-
 <div class="product cart-view">
     <div class="productImage">
         <img data-th-src="${imageUrl}" data-th-alt="${displayName}">
@@ -24,6 +23,7 @@
             <a class="ui button greenButton" data-th-attr="data-klarna-cart-add=${addToCart},data-klarna-product-id=${_id}">Buy</a>
         </div>
         <div class="productDescription">
+        	<strong><p data-th-text="${intro}"></p></strong>
             <p data-th-utext="${description}"></p>
         </div>
         <!--<div class="productRecommend">-->

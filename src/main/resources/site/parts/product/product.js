@@ -1,7 +1,6 @@
 var klarna = require('klarnaLib');
 var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
-var contentLib = require('/lib/xp/content');
 
 var currencyMap = {
     "EUR": "€",
@@ -15,10 +14,13 @@ function getPrice(price){
     var siteConfig = portal.getSiteConfig();
 
     var price = (price);
-
-    price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
-
-    return price;
+    
+    if (price)
+	{
+    	price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
+        return price;
+	}
+		
 }
 
 
@@ -40,7 +42,7 @@ function getDiscountedPrice(price, discount){
 
 exports.get = function (req) {
 
-    var model = portal.getContent();
+    var model = portal.getContent();    
     var site = portal.getSite();
     model.price = getPrice(model.data.unit_price);
 
@@ -64,6 +66,7 @@ exports.get = function (req) {
         format: 'jpeg'
     });
 
+    model.intro = model.data.intro;
     model.description =  portal.processHtml({value: model.data.body});
     model.discount = getDiscount(model.data.discount_rate);
     model.discountedPrice = getDiscountedPrice(model.data.unit_price, model.data.discount_rate);
@@ -72,7 +75,7 @@ exports.get = function (req) {
     if(model.discountedPrice){
         model.priceClass = "discounted";
     }
-    
+        
     return {
         body: thymeleaf.render(resolve('product.html'), model)
     }

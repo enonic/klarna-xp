@@ -1,12 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
   <config>
+    <field-set name="style_settings">
+      <label>Style Settings</label>
+      <items>
+      	<input type="ImageSelector" name="headerLogo">
+	      <label>Company Logo</label>
+	      <occurrences minimum="0" maximum="1"/>
+	    </input>
+	    
+	    <field-set name="color_theme">
+	      <label>Top and Bottom Color Theme</label>
+	      <items>
+	      	<input type="Double" name="red">
+		      <label>Red</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <!-- <default>75.0</default>-->
+		      <default>102</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>
+		    
+		    <input type="Double" name="green">
+		      <label>Green</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <!-- <default>195.0</default>-->
+		      <default>164</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>
+		    
+		    <input type="Double" name="blue">
+		      <label>Blue</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <!-- <default>201.0</default>-->
+		      <default>160</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>	              
+	      </items>
+	    </field-set>
+	    
+	    <field-set name="body_color">
+	      <label>Body Background Color</label>
+	      <items>
+	      	<input type="Double" name="backgroundRed">
+		      <label>Red</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <default>255.0</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>
+		    
+		    <input type="Double" name="backgroundGreen">
+		      <label>Green</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <default>255.0</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>
+		    
+		    <input type="Double" name="backgroundBlue">
+		      <label>Blue</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <default>255.0</default>
+		      <config>
+		      	<min>0</min>
+		      	<max>255</max>
+		      </config>
+		    </input>	              
+	      </items>
+	    </field-set>
+      </items>
+    </field-set>
+    
+    <field-set name="footer">
+      <label>Footer Settings</label>
+      <items>
+      	<input type="TextLine" name="company_name">
+          <label>Company Name</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="email">
+          <label>Email</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+
+        <input type="TextLine" name="phone">
+          <label>Phone</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        
+        <input type="TextLine" name="address_line_1">
+          <label>Address Line 1</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        
+        <input type="TextLine" name="address_line_2">
+          <label>Address Line 2</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+		
+		<input type="TextLine" name="copyright_notice_left">
+          <label>Copyright Notice Left</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        
+        <input type="TextLine" name="copyright_notice_right">
+          <label>Copyright Notice Right</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
+    
     <input name="merchant_id" type="TextLine">
       <label>Merchant ID</label>
       <occurrences minimum="1" maximum="1"/>
       <help-text></help-text>
     </input>
-
+    
     <input name="secret_key" type="TextLine">
       <label>Merchant Secret Key</label>
       <occurrences minimum="1" maximum="1"/>
@@ -41,7 +163,18 @@
         <option value="SEK">Swedish Crowns (SEK)</option>
       </config>
     </input>
-
+    
+    <input type="Double" name="tax_rate">
+    	<label>Tax Rate (%)</label>
+        <help-text>Percentage of tax rate</help-text>
+        <default>0</default>
+        <occurrences minimum="1" maximum="1"/>
+        <config>
+           	<min>0</min>
+		    <max>100</max>
+	    </config>
+	</input>
+	
     <input name="page_terms" type="ContentSelector">
       <label>Terms Page</label>
       <help-text></help-text>

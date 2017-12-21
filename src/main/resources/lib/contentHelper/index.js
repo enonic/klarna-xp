@@ -1,3 +1,6 @@
+// This lib was created with the intent of saving the shopping carts and orders inside the Enonic Content Tree. 
+// It uses functions from the content lib, instead of the node lib, manipulating then the nodes present in the Content Studio.
+
 var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
 var portal = require('/lib/xp/portal');
@@ -7,7 +10,7 @@ module.exports = {
     deleteContent: deleteContent,
     createContent: createContent,
     modifyContent: modifyContent,
-    contentCount: contentCount
+    contentCount: contentCount    
 };
 
 function list(contentListCsv) {
@@ -46,7 +49,9 @@ function createContent(params) {
     if (!params.displayName) throw "Cannot create content. Missing parameter: displayName";
     if (!params.type) throw "Cannot create content. Missing parameter: type";
     if (!params.data) throw "Cannot create content. Missing parameter: data";
-    var site = portal.getSite();
+    
+    var site = portal.getSite();    
+    
     try {
         var branch = contextLib.get().branch;
         return contextLib.run({
@@ -64,7 +69,7 @@ function createContent(params) {
                 branch: 'draft',
                 data: params.data
             });
-            publish(c._id, branch);
+            publish(c._id, branch);     
             return c;
         });
     } catch (e) {
@@ -130,3 +135,4 @@ function publish(key, branch) {
         contentLib.publish({keys: [key], sourceBranch: 'draft', targetBranch: 'master'});
     }
 }
+

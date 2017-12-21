@@ -9,22 +9,28 @@
 	<title>[[${siteName}]]</title>
 
 	<!-- Styles -->
-	<link data-th-href="${faviconUrl}" rel="icon" type="image/png" />
+	<link data-th-href="${headerLogo}" rel="icon" type="image/png" />
 	<link data-th-each="css:${componentsCss}" data-th-href="${css}" rel="stylesheet" type="text/css"/>
+	<style>
+		.categoriesMenu .categoryLink a {
+			[[${colorTheme.colorString}]]		
+		}
+	</style>
 	<!-- Common lib -->
 	<script data-th-each="script:${componentsJs}" data-th-src="${script}" type="text/javascript"></script>
 
-	<link rel="icon" type="image/svg" sizes="any" data-th-href="${faviconUrl}"/>
+	<link rel="icon" type="image/svg" sizes="any" data-th-href="${headerLogo}"/>
 </head>
-<body>
-	<nav class="nav ui menu visible">
+<body data-th-if="${bodyColor}" data-th-style="${bodyColor.backgroundColorString}">
+	<nav class="nav ui menu visible" data-th-if="${colorTheme}" data-th-style="${colorTheme.backgroundColorString}">
 		<div class="ui container">
 			<a class="item" data-th-each="menuItem:${menu}" data-th-href="${menuItem.url}" data-th-classappend="${menuItem.class}">
 				[[${menuItem.name}]]
 			</a>
 			<div class="header item">
 				<a data-th-href="${siteUrl}">
-					<img data-th-src="${klarnaIcon}" />
+					<img class="header__team__brand__img" data-th-src="${headerLogo}" data-th-if="${headerLogo}" data-th-classappend="${headerLogoClass}" />
+					<!--<img data-th-src="${klarnaIcon}" />-->
 				</a>
 				<!--<a data-th-href="${siteUrl}">-->
 				<!--&nbsp;&nbsp;[[${siteName}]]-->
@@ -52,7 +58,7 @@
 						<div class="xp-region" data-th-if="${!isFragment}">
 							<div data-th-if="${mainRegion}" data-th-remove="tag">
 								<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
-									<div data-portal-component="${component.path}" data-th-remove="tag"></div>
+									<div data-portal-component="${component.path}" data-th-remove="tag"></div>									
 								</div>
 							</div>
 						</div>
@@ -69,21 +75,21 @@
 
 
 	</main>
-	<footer class="ui vertical footer segment">
+	<footer class="ui vertical footer segment" data-th-if="${colorTheme}" data-th-style="${colorTheme.backgroundColorString}">
 		<div class="ui container stackable two column grid">
 			<div class="column">
-				<h4>Company X</h4>
-				<p>
-					+1 804 1234567 | email@company.com <br>
-					123 main St. <br>
-					City, IL 60626
+				<h4 data-th-if="${footer}" data-th-text="${footer.company_name}"></h4>
+				<p data-th-if="${footer}">
+					[[${footer.phone}]] | [[${footer.email}]] <br>
+					[[${footer.address_line_1}]] <br>
+					[[${footer.address_line_2}]]
 				</p>
 			</div>
 			<div class="column">
 				<h4>Get to Know Us</h4>
-				<a class="item" target="_blank">Copyright &copy; Seeds Consulting 2017</a>
+				<a class="item" target="_blank">[[${footer.copyright_notice_left}]] &copy; [[${footer.copyright_notice_right}]]</a>				
 				<br><br>
-				<p><a href="">sign up</a></p>
+				<p><a href="">Sign Up</a></p>
 			</div>
 		</div>
 		<!--<div class="ui center aligned container">-->

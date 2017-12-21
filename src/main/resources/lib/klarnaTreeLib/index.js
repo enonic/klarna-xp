@@ -1,9 +1,13 @@
+// This lib was created with the intent of saving the shopping carts and orders inside the Enonic Content Tree. 
+// It uses functions from the content lib, instead of the node lib, manipulating then the nodes present in the Content Studio.
+
 var cartLib = require('cartLib');
 var customerLib = require('customerLib');
 var portal = require('/lib/xp/portal');
+var contentLib = require('/lib/xp/content');
+var contentHelper = require('contentHelper');
 var klarnaOrderClass = Java.type("no.seeds.klarna.Checkout");
 var intClass = Java.type("java.lang.Integer");
-var klarnaNodeLib = require('klarnaNodeLib');
 
 module.exports = {
     context: getContext,
@@ -30,8 +34,6 @@ function getContext(req) {
     context.cartItemsTotal = getItemCount(context.cartItems);
     context.cartTotal = getTotalPrice(context.cartItems);
     context.req = req;
-    
-    
 
     var contextDebug = {
         method: req.method,
@@ -48,10 +50,14 @@ function getContext(req) {
 
 function getCartContent(content_id, klarna_order_id){
     var site = portal.getSite();
-    var queryString = "(_id = '"+content_id+"' " +
+    var queryString = "_path LIKE '/content"+site._path+"/*' " +
+        "AND (_id = '"+content_id+"' " +
         "OR data.klarna_order_id = '"+klarna_order_id+"')";
     log.info(queryString)
-    var cartContent = klarnaNodeLib.query(queryString, app.name+":cart");
+    var cartContent = contentLib.query({
+        query: queryString,
+        contentTypes: [app.name+":cart"]
+    });
 
     return cartContent.hits[0];
 }
@@ -79,14 +85,14 @@ function updateContext(req, klarna_order_id, order_status) {
                 return c;
             }
         }
-        cartContent = klarnaNodeLib.modifyContent(editorObject);
+        cartContent = contentHelper.modifyContent(editorObject);
 
         log.info(order_status)
         if ((order_status == "checkout_complete" || order_status == "created") && siteConfig.page_confirmation == currentPage._id) {
             editorObject.targetPath = "/orders";
         }
 
-        cartContent = klarnaNodeLib.modifyContent(editorObject);
+        cartContent = contentHelper.modifyContent(editorObject);
     }
 }
 
@@ -94,9 +100,8 @@ function getItemCount(cartItems) {
     if (!cartItems) return 0;
     var itemCount = 0;
     cartItems.forEach(function (item) {
-        itemCount = itemCount + Number(item.quantity);
+        itemCount = itemCount + item.quantity;
     });
-    
     return itemCount;
 }
 
@@ -203,7 +208,7 @@ function imageUrl(imageId, scale, format, quality){
 
         //When image/gif do not use imageUrl
         var imageUrl;
-        var result = klarnaNodeLib.get(imageId);
+        var result = contentLib.get({ key: imageId });
         if (checkNested(result, 'x', 'media', 'imageInfo', 'contentType') &&
             result['x']['media']['imageInfo']['contentType'] == "image/gif") {
             imageUrl = portal.pageUrl({path: result._path, type: imgOpts.type});
@@ -222,9 +227,17 @@ function imageUrl(imageId, scale, format, quality){
     }
 }
 
-function contentExists(id){
+function contentExists(id, branch){
     try{
-        var result = klarnaNodeLib.get(id);
+        var getObj = {
+            key: id
+        };
+
+        if(branch){
+            getObj.branch = branch;
+        }
+
+        var result = contentLib.get(getObj);
         return !!result;
     }catch(e){
         // log.error("98: "+(e.cause ? e.cause.message : e.message));

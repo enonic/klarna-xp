@@ -30,6 +30,8 @@ exports.get = function (req) {
     model.items = appendRemoveFromCartLink(context.cartItems);
     model.totalPrice = getPrice(context.cartTotal);
     model.currency = currencyMap[settings.purchase_currency];
+    
+    log.info("\n\ncurrency: " + model.currency + "\n");
 
     model.checkoutUrl = portal.pageUrl({
         id: settings.page_checkout,

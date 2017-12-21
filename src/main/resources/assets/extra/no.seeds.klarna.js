@@ -40,7 +40,11 @@ $(function () {
         e.preventDefault();
         var url = $(e.currentTarget).data('klarna-cart-update') + "&quantity="+$(this).val();
         $.get(url).done(function (data) {
-            toastr.success(data.msg, "", toastrOptions);
+        	if (data.type == "success")
+        		toastr.success(data.msg, "", toastrOptions);
+        	
+        	else if (data.type == "error")
+        		toastr.error(data.msg, "", toastrOptions);
             refreshCart(data);
         });
     });

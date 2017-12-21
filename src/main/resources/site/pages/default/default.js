@@ -4,6 +4,10 @@ var libs = {
 };
 var klarna = require('klarnaLib');
 
+var klarnaNodeLib = require('klarnaNodeLib');
+var nodeLib = require('/lib/xp/node');
+var contentLib = require('/lib/xp/content');
+
 // Specify the view file to use
 var conf = {
     view: resolve('default.html')
@@ -29,6 +33,29 @@ exports.get = function(req) {
     //log.info('Pretty JSON %s', JSON.stringify(content, null, 4));
 
     // Prepare the model that will be passed to the view
+    
+    // ------------------------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------------------------
+    
+    var footer = {
+    		company_name: settings.company_name,
+    		email: settings.email,
+    		phone: settings.phone,
+    		address_line_1: settings.address_line_1,
+    		address_line_2: settings.address_line_2,
+    		copyright_notice_left: settings.copyright_notice_left,
+    		copyright_notice_right: settings.copyright_notice_right
+    };
+    
+    var colorTheme = {
+    		backgroundColorString: "background-color: rgb(" + settings.red + ", " + settings.green + ", " + settings.blue + ");",
+    		colorString: "color: rgb(" + settings.red + ", " + settings.green + ", " + settings.blue + ");"
+    }
+    
+    var bodyColor = {
+    		backgroundColorString: "background-color: rgb(" + settings.backgroundRed + ", " + settings.backgroundGreen + ", " + settings.backgroundBlue + ");",
+    }
 
     var context = klarna.context(req);
 
@@ -40,6 +67,10 @@ exports.get = function(req) {
         itemCount: context.cartItemsTotal.toFixed(0),
         klarnaIcon: libs.portal.assetUrl({path: "/img/brand.svg"}),
         siteUrl: libs.portal.pageUrl({ id: site._id }),
+        footer: footer,
+        headerLogo: klarna.imageUrl(settings.headerLogo, "wide(72,72)"),
+        colorTheme: colorTheme,
+        bodyColor: bodyColor,
         checkoutPageUrl: libs.portal.pageUrl({
             id: settings.page_cart,
             type: "absolute"

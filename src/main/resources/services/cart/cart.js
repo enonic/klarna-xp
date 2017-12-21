@@ -60,7 +60,7 @@ function appendRemoveFromCartLink(items) {
         });
 
         item.addToCart = portal.serviceUrl({
-            service: 'cart',
+        	service: 'cart',
             params: {
                 action: 'addQty',
                 productId: item.product._id,
@@ -96,33 +96,45 @@ function actionSelector(req) {
             quantity = context.cartItemsTotal.toFixed(0);
             break;
         case 'addQty':
-            if (!context.cart) {
+        	if (!context.cart) {
                 context.cart = cartLib.createCart(context);
             }
             cartLib.addToCartQuantity(context.cart._id, req.params.quantity, req.params.productId);
             msg = "Product added to cart";
             toastrType = "success";
             context = klarna.context(req);
-            quantity = context.cartItemsTotal.toFixed(0);
+            
+            if (context.cartItemsTotal.toFixed(0) == 0)
+            	quantity = req.params.quantity;
+            
+            else
+            	quantity = context.cartItemsTotal.toFixed(0);
+            
             break;
         case "updateQty":
             if (!context.cart) {
-                context.cart = cartLib.createCart(context);
+                context.cart = cartLib.createCart(context);                
             }
-            if(parseInt(req.params.quantity) == 0) {
+            if(parseInt(req.params.quantity) < 0) {
+            	msg = "Invalid quantity value!";
+                toastrType = "error";
+            	
+            } else if(parseInt(req.params.quantity) == 0) {
                 cartLib.removeFromCart(context.cart._id, "all", req.params.productId);
                 msg = "Product removed from cart!";
+                toastrType = "success";
             } else {
                 cartLib.updateCartQuantity(context.cart._id, req.params.quantity, req.params.productId);
                 msg = "Product quantity updated!";
+                toastrType = "success";
             }
-            toastrType = "success";
+            
             context = klarna.context(req);
             quantity = context.cartItemsTotal.toFixed(0);
             break;
     }
-
-    return {
+    
+	return {
         contentType: "application/json",
         body: {
             type: toastrType,

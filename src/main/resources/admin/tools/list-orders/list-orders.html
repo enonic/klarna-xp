@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>[[${appName}]]</title>
+
+    <!-- Styles -->
+    <link data-th-each="css:${componentsCss}" data-th-href="${css}" rel="stylesheet" type="text/css"/>
+    <!-- Common lib -->
+    <script data-th-each="script:${componentsJs}" data-th-src="${script}" type="text/javascript"></script>
+
+    <link rel="icon" type="image/svg" sizes="any" data-th-href="${faviconUrl}"/>
+</head>
+<body>
+<!-- Configuration -->
+<script type="text/javascript" data-th-inline="javascript">
+    var CONFIG = {
+        adminUrl: [[${adminUrl}]],
+        assetsUri: [[${assetsUri}]],
+        appId: [[${appId}]]
+    };
+</script>
+<div class="ui inverted menu visible">
+    <div class="header item">
+        <img data-th-src="${faviconUrl}" />
+        &nbsp;&nbsp;[[${appName}]]
+    </div>
+    <a class="item" data-th-each="menuItem:${menu}" data-th-href="${menuItem.url}" data-th-classappend="${menuItem.class}">
+        [[${menuItem.name}]]
+    </a>
+</div>
+<main class="pusher">
+    <div class="full height body">
+        <div data-portal-region="main">
+            <div class="ui stackable sixteen very relaxed grid">
+                <div class="fourteen wide column row" style="margin: 0 auto;">
+                    <div data-th-replace="orders-table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

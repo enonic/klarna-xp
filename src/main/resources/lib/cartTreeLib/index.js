@@ -1,5 +1,9 @@
+// This lib was created with the intent of saving the shopping carts and orders inside the Enonic Content Tree. 
+// It uses functions from the content lib, instead of the node lib, manipulating then the nodes present in the Content Studio. 
+
+var contentLib = require('/lib/xp/content');
 var portalLib = require('/lib/xp/portal');
-var klarnaNodeLib = require('klarnaNodeLib');
+var contentHelper = require('contentHelper');
 
 module.exports = {
     getCartFromCustomer: getCartFromCustomer,
@@ -9,15 +13,14 @@ module.exports = {
     removeFromCart: removeFromCart,
     getCartItems: getCartItems,
     archiveCart: archiveCart,
-    createCart: createCart,
-    getOrders: getOrders
+    createCart: createCart
 };
 
 function addToCartQuantity(cartId, quantity, productId) {
     if (!cartId) throw "Cannot add to cart. Missing parameter: cartId";
     if (!quantity) throw "Cannot add to cart. Missing parameter: quantity";
     if (!productId) throw "Cannot add to cart. Missing parameter: productId";
-    
+
     function editor(c) {
         var currentData = c.data.items;
 
@@ -59,8 +62,8 @@ function addToCartQuantity(cartId, quantity, productId) {
         }
         return c;
     }
-    
-    klarnaNodeLib.modifyContent({
+
+    contentHelper.modifyContent({
         id: cartId,
         editor: editor
     });
@@ -121,7 +124,7 @@ function updateCartQuantity(cartId, quantity, productId) {
         return c;
     }
 
-    klarnaNodeLib.modifyContent({
+    contentHelper.modifyContent({
         id: cartId,
         editor: editor
     });
@@ -164,7 +167,7 @@ function removeFromCart(cartId, quantity, productId) {
         return c;
     }
 
-    klarnaNodeLib.modifyContent({
+    contentHelper.modifyContent({
         id: cartId,
         editor: editor
     });
@@ -172,10 +175,13 @@ function removeFromCart(cartId, quantity, productId) {
 
 function getCartFromCustomer(customer) {
     if (!customer && !customer._id) throw "Cannot get cart. Missing parameter: customer";
-    
-    var queryString = "data.customer = '" + customer._id + "'";
-    var cartResult = klarnaNodeLib.query(queryString, app.name+':cart');
-    
+    var cartResult = contentLib.query({
+        query: "data.customer = '" + customer._id + "'",
+        contentTypes: [
+            app.name+':cart'
+        ]
+    });
+
     if (cartResult.count > 1) {
         log.error("Multiple carts found for customer " + customer._id);
     }
@@ -189,9 +195,12 @@ function getCartFromCustomer(customer) {
 
 function getCartFromSession(sessionId) {
     if (!sessionId) return;
-    
-    var queryString = "data.session = '" + sessionId + "' AND (data.status IN ('open_cart', 'checkout_incomplete'))";
-    var cartResult = klarnaNodeLib.query(queryString, app.name+':cart');
+    var cartResult = contentLib.query({
+        query: "data.session = '" + sessionId + "' AND (data.status IN ('open_cart', 'checkout_incomplete'))",
+        contentTypes: [
+            app.name+':cart'
+        ]
+    });
 
     if (cartResult.count > 1) {
         log.error("Multiple carts found for session " + sessionId + ". Returning first.");
@@ -201,7 +210,7 @@ function getCartFromSession(sessionId) {
     if (cartResult.count == 1) {
         return cartResult.hits[0];
     }
-    
+
     return null;
 }
 
@@ -231,7 +240,7 @@ function createCartForSession(sessionId) {
             status: "open_cart"
         }
     };
-    var cart = klarnaNodeLib.createContent(params);
+    var cart = contentHelper.createContent(params);
     return cart;
 }
 
@@ -246,33 +255,34 @@ function createCartForCustomer(customer) {
             customer: customer._id
         }
     };
-    var cart = klarnaNodeLib.createContent(params);
+    var cart = contentHelper.createContent(params);
 
     return cart;
 }
 
 function getCartItems(cart) {
-	
-	var items = [];
+    var items = [];
     if (cart && cart.data.items) {
         if (!Array.isArray(cart.data.items)) {
             cart.data.items = [cart.data.items];
         }
         cart.data.items.forEach(function (item) {
-            var product = klarnaNodeLib.get(item.product);
-            
+        	var product = contentLib.get({
+                key: item.product
+            });
+
             if(product) {
-            	product.url = portalLib.pageUrl({
+                product.url = portalLib.pageUrl({
                     id: product._id,
                     type: "absolute"
-                }).replace("/admin/tool/"+app.name+"/list-orders/klarna-checkout", "");
+                });
 
                 if (product.data.image) {
                     product.imageUrl = portalLib.imageUrl({
                         id: product.data.image,
                         scale: 'width(250)',
                         format: 'jpeg'
-                    }).replace("/admin/tool/"+app.name+"/list-orders", "");
+                    });
                 }
                 var price;
                 if(product.data.discount_rate){
@@ -280,7 +290,7 @@ function getCartItems(cart) {
                 } else {
                     price = product.data.unit_price * item.quantity;
                 }
-                
+
                 items.push({
                     product: product,
                     price: price,
@@ -289,42 +299,9 @@ function getCartItems(cart) {
             }
         });
     }
-    
     return items;
 }
 
 function archiveCart(cartId) {
-	klarnaNodeLib.deleteContent(cartId);
-}
-
-
-function getOrders(){
-	
-	var carts = [];
-    var shoppingCarts = klarnaNodeLib.listCarts();
-    var orders = klarnaNodeLib.listOrders();
-
-    shoppingCarts.forEach(function(el){
-        carts.push(getOrderModel(el));
-    });
-    
-    orders.forEach(function(el){
-        carts.push(getOrderModel(el));        
-    });
-
-    return carts;
-}
-
-function getOrderModel(orderNode){
-    if(orderNode && orderNode.data){
-        var orderItems = getCartItems(orderNode);
-        
-        var nodeObj = {
-            createdTime: orderNode.createdTime,
-            klarnaId: orderNode.data.klarna_order_id ? orderNode.data.klarna_order_id : "-",
-            status: (orderNode.data.status.toUpperCase() == "CREATED") ? "ORDER_CREATED" : orderNode.data.status.toUpperCase(),
-            items: orderItems
-        };
-        return nodeObj;
-    }
+    contentHelper.deleteContent(cartId);
 }

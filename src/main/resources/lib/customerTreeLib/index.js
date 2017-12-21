@@ -1,5 +1,9 @@
+// This lib was created with the intent of saving the shopping carts and orders inside the Enonic Content Tree. 
+// It uses functions from the content lib, instead of the node lib, manipulating then the nodes present in the Content Studio.
+
 var authLib = require('/lib/xp/auth');
-var klarnaNodeLib = require('klarnaNodeLib');
+var contentLib = require('/lib/xp/content');
+var contentHelper = require('contentHelper');
 
 module.exports = {
     getCustomer: getCustomer,
@@ -37,22 +41,27 @@ function updateAddress(customer, params) {
         return c;
     }
     log.info("about to update address");
-    return klarnaNodeLib.modifyContent({
+    return contentHelper.modifyContent({
         id: customer._id,
         editor: editor
     });
 }
 
 function fetchCustomer(userKey) {
-	
-	var queryString = "data.userKey = '" + userKey + "'";
-	var customerResult = klarnaNodeLib.query(queryString, 'no.iskald.payup:customer');
-    
+    var customerResult = contentLib.query({
+        query: "data.userKey = '" + userKey + "'",
+        branch: "draft",
+        contentTypes: [
+            'no.iskald.payup:customer'
+        ]
+    });
     if (customerResult.count == 0) return;
 
     if (customerResult.count > 1) {
         customerResult.hits.forEach(function (customer) {
-            klarnaNodeLib.delete(customer._id);
+            contentLib.delete({
+                key: customer._id
+            });
         });
     }
     return customerResult.hits[0];
@@ -69,5 +78,5 @@ function createCustomer(userKey) {
         }
     };
 
-    return klarnaNodeLib.createContent(params);
+    return contentHelper.createContent(params);
 }

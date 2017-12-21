@@ -1,0 +1,39 @@
+<div class="column center aligned" style="padding-right: 1.25rem">
+    <h2 class="ui center aligned header">Shopping Carts / Orders</h2>
+    <table class="ui celled table no-sort" style="margin-right: 1.25rem;">
+        <thead>
+        <tr>
+            <th class="ui center aligned content">KLARNA ORDER ID</th>
+            <th class="ui center aligned content" style="min-width: 100px;">STATUS</th>
+            <th class="ui center aligned content" style="min-width: 450px;">ITEMS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div  data-th-each="order:${orders}" data-th-remove="tag">
+            <tr>
+                <td class="ui center aligned content">[[${order.klarnaId}]]</td>
+                <td class="ui center aligned content" style="min-width: 100px;">
+                    [[${order.status}]]
+                </td>
+                <td class="ui left aligned content" style="min-width: 450px;">
+                    <div class="ui klarna list">
+                        <div class="item" data-th-each="item:${order.items}">
+                            <img class="ui avatar image" data-th-src="${item.product.imageUrl}">
+                            <div class="content">
+                                <a class="header" data-th-href="${item.product.url}">[[${item.quantity}]]x [[${item.product.displayName}]]</a>
+                                <div class="description">kr [[${item.price}]]</div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+    <div class="field hidden" id="loading">
+        <div class="ui active inverted dimmer">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <p></p>
+    </div>
+</div>

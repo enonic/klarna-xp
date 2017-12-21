@@ -3,10 +3,4 @@
     <display-name>Category</display-name>
     <super-type>base:structured</super-type>
     <allow-child-content>true</allow-child-content>
-    <form>
-        <input type="TextLine" name="name">
-            <label>Name</label>
-            <occurrences minimum="1" maximum="1"/>
-        </input>
-    </form>
 </content-type>
