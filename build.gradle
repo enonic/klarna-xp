@@ -35,6 +35,7 @@ dependencies {
     include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
     include "com.enonic.xp:lib-i18n:${xpVersion}"
     include "com.enonic.xp:lib-node:${xpVersion}"
+    include "com.enonic.xp:lib-repo:${xpVersion}"
     include 'com.enonic.lib:util:1.1.1'
     include "com.enonic.xp:lib-auth:${xpVersion}"
     //include "com.enonic.xp:lib-mustache:${xpVersion}"

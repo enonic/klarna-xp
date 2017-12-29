@@ -1,0 +1,250 @@
+<node>
+    <id>cdfaf916-f2b6-4abe-8561-681c16d45c76</id>
+    <childOrder>modifiedtime DESC</childOrder>
+    <nodeType>content</nodeType>
+    <timestamp>2017-12-28T16:48:41.156Z</timestamp>
+    <inheritPermissions>true</inheritPermissions>
+    <permissions>
+        <principal key="role:cms.cm.app">
+            <allow type="array">
+                <value>READ</value>
+            </allow>
+            <deny type="array"/>
+        </principal>
+        <principal key="role:system.admin">
+            <allow type="array">
+                <value>READ</value>
+                <value>CREATE</value>
+                <value>MODIFY</value>
+                <value>DELETE</value>
+                <value>PUBLISH</value>
+                <value>READ_PERMISSIONS</value>
+                <value>WRITE_PERMISSIONS</value>
+            </allow>
+            <deny type="array"/>
+        </principal>
+        <principal key="role:cms.admin">
+            <allow type="array">
+                <value>READ</value>
+                <value>CREATE</value>
+                <value>MODIFY</value>
+                <value>DELETE</value>
+                <value>PUBLISH</value>
+                <value>READ_PERMISSIONS</value>
+                <value>WRITE_PERMISSIONS</value>
+            </allow>
+            <deny type="array"/>
+        </principal>
+        <principal key="role:system.everyone">
+            <allow type="array">
+                <value>READ</value>
+            </allow>
+            <deny type="array"/>
+        </principal>
+    </permissions>
+    <data>
+        <boolean name="valid">true</boolean>
+        <string name="displayName">Product 2</string>
+        <string name="type">no.seeds.klarna:product</string>
+        <string name="owner">user:system:su</string>
+        <dateTime name="modifiedTime">2017-12-28T16:48:41.156Z</dateTime>
+        <string name="modifier">user:system:su</string>
+        <string name="creator">user:system:su</string>
+        <dateTime name="createdTime">2017-04-17T15:42:47.600Z</dateTime>
+        <property-set name="publish">
+            <dateTime name="first">2017-04-17T15:50:55.637Z</dateTime>
+            <dateTime name="from">2017-04-17T15:50:55.637Z</dateTime>
+            <dateTime isNull="true" name="to"/>
+        </property-set>
+        <property-set name="data">
+            <string name="type">physical</string>
+            <double name="tax_rate">0.0</double>
+            <double name="discount_rate">0.0</double>
+            <reference name="image">535186f9-31ae-4469-8187-37d75ade9a96</reference>
+            <double name="unit_price">50.0</double>
+            <string name="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis enim lorem, lacinia et ligula at, euismod luctus tortor. Sed tristique urna a convallis porttitor. Vestibulum tristique tincidunt dui.</string>
+            <string name="body">&lt;p&gt;Cras eget nisl eget ipsum cursus convallis. Nulla a neque urna. In sem purus, sodales sit amet pulvinar a, posuere sit amet lectus. Quisque metus magna, elementum eu augue at, dictum tincidunt libero. Fusce nec ornare arcu. Cras laoreet mi nec ante gravida porta. Fusce sollicitudin nunc augue, in elementum dolor hendrerit vitae. Suspendisse et dui sit amet purus sagittis imperdiet. Ut sit amet diam non sem elementum feugiat. Nulla facilisi. Suspendisse molestie, lacus nec egestas fringilla, magna turpis congue urna, in sollicitudin quam neque eu arcu. Phasellus euismod elit non viverra posuere. Quisque neque justo, egestas sit amet odio eget, mattis interdum ligula.&lt;/p&gt;
+&lt;p&gt;Mauris at neque et eros convallis finibus id a augue. Phasellus enim orci, porta at lorem quis, cursus eleifend nunc. Sed non felis ac leo tempor pulvinar. Morbi finibus sem eu pellentesque pretium. Integer pretium dui lobortis ante feugiat, eget gravida tellus fringilla. Sed luctus odio in sem ultricies bibendum. Nunc vel tellus blandit, feugiat lectus sit amet, pharetra odio.&lt;/p&gt;
+&lt;p&gt;Duis pharetra nulla at pretium commodo. Sed ullamcorper hendrerit erat eget venenatis. Ut vitae venenatis mi. Aliquam et pharetra ipsum. Fusce placerat pulvinar dolor ac tincidunt. Cras vel cursus ante, non commodo libero. Sed vehicula, turpis quis iaculis porta, justo mauris pulvinar orci, nec tempus lacus sem in est. Nullam ac turpis sagittis, facilisis neque ac, feugiat nunc. Ut facilisis leo quam, vitae cursus lorem sodales in. In lobortis lectus justo.&lt;/p&gt;
+&lt;p&gt;Fusce ac congue nulla, iaculis rutrum est. Sed euismod sapien massa, eu tincidunt justo malesuada et. Maecenas tempus pulvinar risus, quis blandit libero vulputate a. Cras non iaculis est. Sed molestie nibh at dictum suscipit. Donec tempor consectetur purus, sit amet laoreet purus aliquet eget. Integer risus eros, tincidunt id pellentesque at, dapibus in odio. Aenean sed tristique est, vitae faucibus mauris.&lt;/p&gt;</string>
+        </property-set>
+    </data>
+    <indexConfigs>
+        <analyzer>document_index_default</analyzer>
+        <defaultConfig>
+            <decideByType>true</decideByType>
+            <enabled>true</enabled>
+            <nGram>false</nGram>
+            <fulltext>false</fulltext>
+            <includeInAllText>false</includeInAllText>
+        </defaultConfig>
+        <pathIndexConfigs>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>true</nGram>
+                    <fulltext>true</fulltext>
+                    <includeInAllText>true</includeInAllText>
+                    <indexValueProcessors>
+                        <indexValueProcessor>htmlStripper</indexValueProcessor>
+                    </indexValueProcessors>
+                </indexConfig>
+                <path>page.region.**.TextComponent.text</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>data.siteconfig.applicationkey</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>true</nGram>
+                    <fulltext>true</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>attachment.text</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>false</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>page.regions</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>true</nGram>
+                    <fulltext>true</fulltext>
+                    <includeInAllText>true</includeInAllText>
+                    <indexValueProcessors>
+                        <indexValueProcessor>htmlStripper</indexValueProcessor>
+                    </indexValueProcessors>
+                </indexConfig>
+                <path>data.body</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>creator</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>createdTime</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>modifiedTime</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>modifier</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>owner</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>attachment</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>x</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>false</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>page</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>false</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>site</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>false</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>type</path>
+            </pathIndexConfig>
+            <pathIndexConfig>
+                <indexConfig>
+                    <decideByType>true</decideByType>
+                    <enabled>true</enabled>
+                    <nGram>false</nGram>
+                    <fulltext>false</fulltext>
+                    <includeInAllText>false</includeInAllText>
+                </indexConfig>
+                <path>data</path>
+            </pathIndexConfig>
+        </pathIndexConfigs>
+    </indexConfigs>
+</node>
