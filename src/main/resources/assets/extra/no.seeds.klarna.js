@@ -16,6 +16,8 @@ $(function () {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+    
+    $.ajaxSetup({ cache: false });
 
     $("body").on("click", ".open-cart-modal", function(){
         refreshCart();
@@ -50,7 +52,7 @@ $(function () {
     });
 
     $(".cart-view").on("click", "[data-klarna-cart-add]",function (e) {
-        e.preventDefault();
+    	e.preventDefault();
         var url = $(e.currentTarget).data('klarna-cart-add');
         var quantity = $("#qtyInput_"+$(e.currentTarget).data("klarna-product-id"));
         if(quantity.val() > 1){
@@ -80,6 +82,6 @@ $(function () {
 });
 
 function refreshCart(data) {
-    $("#cartQty").html(data.quantity)
+	$("#cartQty").html(data.quantity)
     $(".cart-content").html($(data.cart.body).find(".cart-content").html());
 }
