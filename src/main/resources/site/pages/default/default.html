@@ -9,7 +9,7 @@
 	<title>[[${siteName}]]</title>
 
 	<!-- Styles -->
-	<link data-th-href="${headerLogo}" rel="icon" type="image/png" />
+	<link data-th-href="${faviconUrl}" rel="icon" type="image/png" />
 	<link data-th-each="css:${componentsCss}" data-th-href="${css}" rel="stylesheet" type="text/css"/>
 	<style>
 		.categoriesMenu .categoryLink a {
@@ -19,7 +19,7 @@
 	<!-- Common lib -->
 	<script data-th-each="script:${componentsJs}" data-th-src="${script}" type="text/javascript"></script>
 
-	<link rel="icon" type="image/svg" sizes="any" data-th-href="${headerLogo}"/>
+	
 </head>
 <body data-th-if="${bodyColor}" data-th-style="${bodyColor.backgroundColorString}">
 	<nav class="nav ui menu visible" data-th-if="${colorTheme}" data-th-style="${colorTheme.backgroundColorString}">
@@ -89,7 +89,6 @@
 				<h4>Get to Know Us</h4>
 				<a class="item" target="_blank">[[${footer.copyright_notice_left}]] &copy; [[${footer.copyright_notice_right}]]</a>				
 				<br><br>
-				<p><a href="">Sign Up</a></p>
 			</div>
 		</div>
 		<!--<div class="ui center aligned container">-->

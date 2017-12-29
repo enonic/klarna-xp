@@ -19,6 +19,8 @@ function getPrice(price){
     var price = price;
 
     price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
+    
+    price = price.replace(".", ",");
 
     return price;
 }
@@ -34,6 +36,7 @@ function getCartView(req) {
     model.cart = context.cart;
     model.items = appendRemoveFromCartLink(context.cartItems);
     model.totalPrice = getPrice(context.cartTotal);
+    model.currency = currencyMap[settings.purchase_currency];
     model.backToStore = portal.pageUrl({
         id: site._id,
         type: "absolute"

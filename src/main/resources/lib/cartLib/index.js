@@ -1,8 +1,8 @@
 var portalLib = require('/lib/xp/portal');
 var klarnaNodeLib = require('klarnaNodeLib');
+var contentLib = require('/lib/xp/content');
 
 module.exports = {
-    getCartFromCustomer: getCartFromCustomer,
     getCartFromSession: getCartFromSession,
     addToCartQuantity: addToCartQuantity,
     updateCartQuantity: updateCartQuantity,
@@ -60,7 +60,7 @@ function addToCartQuantity(cartId, quantity, productId) {
         return c;
     }
     
-    klarnaNodeLib.modifyContent({
+    klarnaNodeLib.modifyNode({
         id: cartId,
         editor: editor
     });
@@ -121,7 +121,7 @@ function updateCartQuantity(cartId, quantity, productId) {
         return c;
     }
 
-    klarnaNodeLib.modifyContent({
+    klarnaNodeLib.modifyNode({
         id: cartId,
         editor: editor
     });
@@ -164,27 +164,10 @@ function removeFromCart(cartId, quantity, productId) {
         return c;
     }
 
-    klarnaNodeLib.modifyContent({
+    klarnaNodeLib.modifyNode({
         id: cartId,
         editor: editor
     });
-}
-
-function getCartFromCustomer(customer) {
-    if (!customer && !customer._id) throw "Cannot get cart. Missing parameter: customer";
-    
-    var queryString = "data.customer = '" + customer._id + "'";
-    var cartResult = klarnaNodeLib.query(queryString, app.name+':cart');
-    
-    if (cartResult.count > 1) {
-        log.error("Multiple carts found for customer " + customer._id);
-    }
-
-    if (cartResult.count == 1) {
-        return cartResult.hits[0];
-    }
-
-    return null;
 }
 
 function getCartFromSession(sessionId) {
@@ -210,20 +193,14 @@ function createCart(context) {
         log.error("Not creating new cart, cart already exists in context");
         return;
     }
-    // Customer cart is disabled untill persistent cart is properly implemented
-    //if (context.customer) {
-    //  return createCartForCustomer(customer)
-    //} else {
-    return createCartForSession(context.req.cookies.JSESSIONID)
-    //}
+    
+    return createCartForSession(context.req.cookies.JSESSIONID)    
 }
 
 function createCartForSession(sessionId) {
     if (!sessionId) throw "Cannot create cart. Missing parameter: sessionId";
     var date = new Date();
     var params = {
-        name: 'cart-' + sessionId+"-"+date.getTime(),
-        displayName: 'sessioncart-' + sessionId,
         path: '/shopping-carts',
         type: 'cart',
         data: {
@@ -231,25 +208,10 @@ function createCartForSession(sessionId) {
             status: "open_cart"
         }
     };
-    var cart = klarnaNodeLib.createContent(params);
+    var cart = klarnaNodeLib.createNode(params);
     return cart;
 }
 
-function createCartForCustomer(customer) {
-    if (!customer) throw "Cannot create cart. Missing parameter: customer";
-    var params = {
-        name: 'cart-' + customer.displayName,
-        displayName: 'usercart-' + customer.displayName,
-        path: '/shopping-carts',
-        type: 'cart',
-        data: {
-            customer: customer._id
-        }
-    };
-    var cart = klarnaNodeLib.createContent(params);
-
-    return cart;
-}
 
 function getCartItems(cart) {
 	
@@ -259,7 +221,9 @@ function getCartItems(cart) {
             cart.data.items = [cart.data.items];
         }
         cart.data.items.forEach(function (item) {
-            var product = klarnaNodeLib.get(item.product);
+        	var product = contentLib.get({
+                key: item.product
+            });
             
             if(product) {
             	product.url = portalLib.pageUrl({
@@ -294,7 +258,7 @@ function getCartItems(cart) {
 }
 
 function archiveCart(cartId) {
-	klarnaNodeLib.deleteContent(cartId);
+	klarnaNodeLib.deleteNode(cartId);
 }
 
 

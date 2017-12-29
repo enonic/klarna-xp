@@ -15,6 +15,8 @@ function getPrice(price){
     var price = price;
 
     price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
+    
+    price = price.replace(".", ",");
 
     return price;
 }
@@ -30,8 +32,6 @@ exports.get = function (req) {
     model.items = appendRemoveFromCartLink(context.cartItems);
     model.totalPrice = getPrice(context.cartTotal);
     model.currency = currencyMap[settings.purchase_currency];
-    
-    log.info("\n\ncurrency: " + model.currency + "\n");
 
     model.checkoutUrl = portal.pageUrl({
         id: settings.page_checkout,

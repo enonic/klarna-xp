@@ -58,7 +58,7 @@ input {
 
 /* Nav */
 .ui.nav {
-  background-color: #4bc3c9;
+  background-color: #66a4a0;
   border: 0;
   border-radius: 0;
   padding: 0;
@@ -266,7 +266,9 @@ input {
   font-family: "Raleway", sans-serif;
   color: #3c3a3b; }
 .cart table.ui.table {
-  border: 0; }
+  border: 0;  
+  background: transparent;
+  border-collapse: separate}
   .cart table.ui.table thead th {
     font-family: "Raleway", sans-serif;
     font-size: 1.42em;
@@ -299,7 +301,34 @@ input {
 @media (max-width: 767px) {
   .cart table.ui:not(.unstackable) tr > td {
     padding-top: 0.7em !important;
-    padding-bottom: 0.7em !important; } }
+    padding-bottom: 0.7em !important; }
+    
+    /*###########################################################################################################*/
+    .cart table.ui.table tbody td:first-child {
+      text-align: left;
+      padding-left: 0;}
+    .cart table.ui.table tbody td:nth-child(2) {
+      display: inline !important;
+      text-align: left;
+      padding-left: 0; }
+    .cart table.ui.table tbody td:nth-child(3) {
+      display: inline !important;
+      text-align: right;
+      padding-right: 0; }
+    
+    /* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+
+	
+
+    
+    /*###########################################################################################################*/
+    }
 .cart table .itemBasket {
   display: -webkit-box;
   display: -webkit-flex;
@@ -498,7 +527,7 @@ input {
 
 /* Footer */
 .ui.footer.segment {
-  background-color: #4bc3c9;
+  background-color: #66a4a0;
   color: white;
   padding-top: 2.5em;
   padding-bottom: 5em;
@@ -518,3 +547,18 @@ input {
     .ui.footer.segment .ui.container.stackable.two.column.grid > .column:nth-child(2) {
       margin-left: auto;
       max-width: 250px; }
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      

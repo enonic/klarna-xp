@@ -2,7 +2,7 @@ var libs = {
     portal: require('/lib/xp/portal'), // Import the portal functions
     thymeleaf: require('/lib/xp/thymeleaf'),
     content: require('/lib/xp/content'),
-    contentHelper: require('contentHelper'),
+    klarnaNodeLib: require('klarnaNodeLib'),
     i18n: require('/lib/xp/i18n')
 };
 
@@ -48,6 +48,8 @@ function getPrice(price){
     var price = (price);
 
     price = conf.currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
+    
+    price = price.replace(".", ",");
 
     return price;
 }
@@ -106,7 +108,7 @@ function getProducts(config) {
             ]
         }).hits;
     } else {
-        products = libs.contentHelper.list(config.item);
+        products = libs.klarnaNodeLib.list(config.item);
     }
 
     var productList = [];

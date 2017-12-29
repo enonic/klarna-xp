@@ -18,6 +18,7 @@ function getPrice(price){
     if (price)
 	{
     	price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
+    	price = price.replace(".", ",");
         return price;
 	}
 		

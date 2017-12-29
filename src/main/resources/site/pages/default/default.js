@@ -36,6 +36,9 @@ exports.get = function(req) {
     
     // ------------------------------------------------------------------------------------
     
+//    klarnaNodeLib.deleteCarts();
+//    klarnaNodeLib.deleteOrders();
+    
     // ------------------------------------------------------------------------------------
     
     var footer = {
@@ -75,7 +78,7 @@ exports.get = function(req) {
             id: settings.page_cart,
             type: "absolute"
         }),
-        faviconUrl: libs.portal.assetUrl({path: '/img/favicon.png'}),
+        faviconUrl: libs.portal.assetUrl({path: '/img/favicon.ico'}),
         componentsCss: [
             libs.portal.assetUrl({path: '/semantic/semantic.min.css'}),
             libs.portal.assetUrl({path: '/semantic/components/card.min.css'}),
@@ -84,22 +87,17 @@ exports.get = function(req) {
             libs.portal.assetUrl({path: '/semantic/components/dimmer.min.css'}),
             libs.portal.assetUrl({path: '/semantic/components/dropdown.min.css'}),
             libs.portal.assetUrl({path: '/semantic/components/checkbox.min.css'}),
-            libs.portal.assetUrl({path: '/extra/league-shared-content.css'}),
+            libs.portal.assetUrl({path: '/extra/shared-content.css'}),
             libs.portal.assetUrl({path: '/extra/toastr.min.css'}),
-            libs.portal.assetUrl({path: '/extra/number-polyfill.css'}),
             libs.portal.assetUrl({path: '/css/main.css'}),
         ],
         componentsJs: [
             "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js",
             libs.portal.assetUrl({path: '/semantic/semantic.min.js'}),
-            // libs.portal.assetUrl({path: '/semantic/components/button.min.js'}),
             libs.portal.assetUrl({path: '/semantic/components/dimmer.min.js'}),
             libs.portal.assetUrl({path: '/semantic/components/dropdown.min.js'}),
             libs.portal.assetUrl({path: '/semantic/components/checkbox.min.js'}),
-            libs.portal.assetUrl({path: '/extra/league-shared-content.js'}),
             libs.portal.assetUrl({path: '/extra/toastr.min.js'}),
-            libs.portal.assetUrl({path: '/extra/number-polyfill.min.js'}),
-            libs.portal.assetUrl({path: '/extra/league-fantasy-bonus.js'}),
             libs.portal.assetUrl({path: '/extra/no.seeds.klarna.js'}),
         ],
     };

@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'http://repo.enonic.com/public'
+        }
+    }
+
+    dependencies {
+        classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
+    }
+}
+
+apply plugin: 'com.enonic.xp.app'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+
+app {
+    name = project.appName
+    displayName = project.displayName
+    vendorName = 'Enonic AS'
+    vendorUrl = 'http://enonic.com'
+}
+
+dependencies {
+    compile "com.enonic.xp:core-api:${xpVersion}"
+    compile "com.enonic.xp:portal-api:${xpVersion}"
+    include "com.enonic.xp:lib-content:${xpVersion}"
+    include "com.enonic.xp:lib-portal:${xpVersion}"
+    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    include "com.enonic.xp:lib-xslt:${xpVersion}"
+    include 'com.enonic.lib:util:1.1.1'
+    include "com.enonic.xp:lib-auth:${xpVersion}"
+    include "com.enonic.xp:lib-http-client:${xpVersion}"
+    //include "com.enonic.xp:lib-mustache:${xpVersion}"
+    //include "com.enonic.xp:lib-i18n:${xpVersion}"
+    include "com.enonic.xp:lib-cache:${xpVersion}"
+    include "com.enonic.xp:lib-context:${xpVersion}"
+    //include "com.enonic.xp:lib-io:${xpVersion}"
+    include "com.enonic.xp:lib-mail:${xpVersion}"
+    include "com.enonic.xp:lib-websocket:${xpVersion}"
+    include "com.cronutils:cron-utils:5.0.4"
+    include 'com.klarna:kco-rest:2.2.0'
+    include 'org.codehaus.jackson:jackson-mapper-asl:1.9.2'
+    include 'org.codehaus.jackson:jackson-core-asl:1.1.0' 
+    include 'com.sun.jersey.contribs:jersey-apache-client4:1.19'
+    include 'com.sun.jersey:jersey-json:1.19'}
+    include 'com.fasterxml.jackson.core:jackson-core:2.5.4' sourceSets {
+    include 'com.fasterxml.jackson.core:jackson-databind:2.5.4' main {
+    include 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.5.4' java {
+    include 'org.apache.commons:commons-lang3:3.4'
+
+            exclude 'node_modules/**'
+       }
+   }
+}

@@ -45,7 +45,7 @@ function handleGet(req){
             portalLib.assetUrl({path: '/semantic/semantic.min.css'}),
             portalLib.assetUrl({path: '/semantic/components/dropdown.min.css'}),
             portalLib.assetUrl({path: '/semantic/components/checkbox.min.css'}),
-            portalLib.assetUrl({path: '/extra/league-shared-content.css'}),
+            portalLib.assetUrl({path: '/extra/shared-content.css'}),
             portalLib.assetUrl({path: '/extra/toastr.min.css'}),
             portalLib.assetUrl({path: '/css/main.css'})
         ],

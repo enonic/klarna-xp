@@ -1,44 +1,38 @@
 var contentLib = require('/lib/xp/content');
 var contextLib = require('/lib/xp/context');
 var nodeLib = require('/lib/xp/node');
+var repoLib = require('/lib/xp/repo');
 var portal = require('/lib/xp/portal');
 
 module.exports = {
     list: list,
-    deleteContent: deleteContent,
-    createContent: createContent,
-    modifyContent: modifyContent,
+    deleteNode: deleteNode,
+    createNode: createNode,
+    modifyNode: modifyNode,
     query: query,
     get: get,
     listCarts: listCarts,
-    listOrders: listOrders
+    listOrders: listOrders,
+    deleteCarts: deleteCarts,
+    deleteOrders: deleteOrders
 };
 
 function list(contentListCsv) {
-	
-	// Connect to repo
-    var repo = nodeLib.connect({
-        repoId: "cms-repo",
-        branch: "draft"
-    });
-    
     var contentList = (contentListCsv + "").split(',');
     var content = [];
     contentList.forEach(function (contentKey) {
-        var c = repo.get(contentKey);
+        var c = contentLib.get({
+            key: contentKey
+        });
         content.push(c);
     });
 
     return content;
 }
 
-function deleteContent(contentId) {
-
-	// Connect to repo
-    var repo = nodeLib.connect({
-        repoId: "cms-repo",
-        branch: "draft"
-    });
+function deleteNode(contentId) {
+	
+	var repo = connectKlarnaRepo();
     
     var branch = contextLib.get().branch;
     contextLib.run({
@@ -48,16 +42,18 @@ function deleteContent(contentId) {
             userStore: 'system'
         }
     }, function () {
+    	contentLib.unpublish({
+    		keys: [contentId]
+    	});
+    	
         repo.delete(contentId);
-        publish(contentId, branch);
+        //publish(contentId, branch);
     });
 }
 
-function createContent(params) {
+function createNode(params) {
     if (!params) throw "Cannot create content. Missing parameter: params";
-    if (!params.name) throw "Cannot create content. Missing parameter: name";
     if (!params.path) throw "Cannot create content. Missing parameter: path";
-    if (!params.displayName) throw "Cannot create content. Missing parameter: displayName";
     if (!params.type) throw "Cannot create content. Missing parameter: type";
     if (!params.data) throw "Cannot create content. Missing parameter: data";
     
@@ -74,11 +70,7 @@ function createContent(params) {
             }
         }, function () {
 
-        	// Connect to repo
-        	var repo = nodeLib.connect({
-                repoId: "cms-repo",
-                branch: "draft"
-            });
+        	var repo = connectKlarnaRepo();
         	
         	// ----- Checks if the corresponding folder node exists. If it does not, it creates it before trying to create a node inside of it. ----------- 
             var retrievedNode = repo.get(params.path);
@@ -93,16 +85,8 @@ function createContent(params) {
             // --------------------------------------------------------------------------------------------------------------------------------------------
         	
             var newNode = repo.create({
-                _name: params.name,
                 _parentPath: params.path,
                 type: app.name + ":" + params.type,
-                displayName: params.displayName,
-                valid: true,
-                creator: contextLib.get().authInfo.principals[contextLib.get().authInfo.principals.length - 1],        
-                createdTime: new Date(),
-                _nodeType: "content",
-                _childOrder: "modifiedtime DESC",
-                _inheritsPermissions: true,
                 data: params.data
             });
         	publish(newNode._id, contextLib.get().branch);
@@ -117,7 +101,7 @@ function createContent(params) {
     }
 }
 
-function modifyContent(params) {
+function modifyNode(params) {
     if (!params) throw "Cannot create content. Missing parameter: params";
     if (!params.id) throw "Cannot create content. Missing parameter: id";
     if (!params.editor) throw "Cannot create content. Missing parameter: editor";
@@ -134,12 +118,7 @@ function modifyContent(params) {
         }
     }, function () {
     	
-    	// Connect to repo
-        var repo = nodeLib.connect({
-            repoId: "cms-repo",
-            branch: "draft"
-        });
-        
+    	var repo = connectKlarnaRepo();        
         
         modifiedContent = repo.modify({
             key: params.id,
@@ -147,6 +126,18 @@ function modifyContent(params) {
         });
 
         if(params.targetPath){
+        	
+        	// ----- Checks if the corresponding folder node exists. If it does not, it creates it before trying to create a node inside of it. ----------- 
+            var retrievedNode = repo.get(params.targetPath);
+            
+            if (!retrievedNode)
+            {
+            	var folder = repo.create({
+            		_name: params.targetPath.replace("/", ""),
+            		type: "base:folder"
+            	});
+            }
+        	
             modifiedContent = repo.move({
                 source: params.id,
                 target: params.targetPath + "/" + modifiedContent._name
@@ -161,11 +152,7 @@ function modifyContent(params) {
 
 function publish(key, branch) {
 	
-	// Connect to repo
-    var repo = nodeLib.connect({
-        repoId: "cms-repo",
-        branch: "draft"
-    });
+	var repo = connectKlarnaRepo();
     
     log.info("**** Branch -> " + branch);
     if (branch == 'master') {
@@ -184,11 +171,8 @@ function query(queryString, type) {
             userStore: 'system'
         }
     }, function () {
-    	// Connect to repo
-        var repo = nodeLib.connect({
-            repoId: "cms-repo",
-            branch: "draft"
-        });
+    	
+    	var repo = connectKlarnaRepo();
         
     	queryResult = repo.query({
         	query: queryString,
@@ -232,11 +216,8 @@ function get(id) {
             userStore: 'system'
         }
     }, function () {
-    	// Connect to repo
-        var repo = nodeLib.connect({
-            repoId: "cms-repo",
-            branch: "draft"
-        });
+    	
+    	var repo = connectKlarnaRepo();
         
     	node = repo.get(id);
     });
@@ -254,4 +235,45 @@ function listOrders() {
 	var carts = query("_path LIKE '/orders/*'", "no.seeds.klarna:cart");
 	
 	return carts.hits;
+}
+
+function deleteCarts(){
+	var carts = query("_path LIKE '/shopping-carts/*'", "no.seeds.klarna:cart");
+	
+	if (carts.hits){		
+		carts.hits.forEach(function(el){
+			deleteNode(el._id);
+		});
+	}
+}
+
+function deleteOrders(){
+	var carts = query("_path LIKE '/orders/*'", "no.seeds.klarna:cart");
+	
+	if (carts.hits){		
+		carts.hits.forEach(function(el){
+			deleteNode(el._id);
+		});
+	}
+}
+
+function connectKlarnaRepo(){
+	// Checks if klarna-repo exists. If not, it creates it
+	var retrievedRepo = repoLib.get('klarna-repo');
+
+	if (retrievedRepo) {
+	   
+	} else {
+	    var newRepo = repoLib.create({
+	        id: 'klarna-repo'
+	    });
+	}
+	
+	// Connect to repo
+    var repo = nodeLib.connect({
+        repoId: "klarna-repo",
+        branch: "master"
+    });
+    
+    return repo;
 }

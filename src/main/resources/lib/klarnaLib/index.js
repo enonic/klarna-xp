@@ -1,9 +1,9 @@
 var cartLib = require('cartLib');
-var customerLib = require('customerLib');
 var portal = require('/lib/xp/portal');
 var klarnaOrderClass = Java.type("no.seeds.klarna.Checkout");
 var intClass = Java.type("java.lang.Integer");
 var klarnaNodeLib = require('klarnaNodeLib');
+var contentLib = require('/lib/xp/content');
 
 module.exports = {
     context: getContext,
@@ -18,31 +18,16 @@ function getKlarnaOrderId(filePath){
 
 function getContext(req) {
     var context = {};
-    context.customer = customerLib.getCustomer();
-    // CUSTOMER CART DISABLED
-    //if (!context.customer) {
+    
     log.info(req.cookies.JSESSIONID);
     context.cart = cartLib.getCartFromSession(req.cookies.JSESSIONID);
-    //} else {
-    //  context.cart = cartLib.getCartFromCustomer(context.customer);
-    //}
+    
     context.cartItems = cartLib.getCartItems(context.cart);
     context.cartItemsTotal = getItemCount(context.cartItems);
     context.cartTotal = getTotalPrice(context.cartItems);
     context.req = req;
     
     
-
-    var contextDebug = {
-        method: req.method,
-        url: req.url,
-        session: req.cookies.JSESSIONID,
-        customer: context.customer ? context.customer._name : 'no-customer',
-        cart: context.cart ? context.cart._id : 'no-cart'
-    };
-
-    //log.info("**** CONTEXT ****");
-    //log.info(JSON.stringify(contextDebug, null, 2));
     return context;
 }
 
@@ -79,14 +64,14 @@ function updateContext(req, klarna_order_id, order_status) {
                 return c;
             }
         }
-        cartContent = klarnaNodeLib.modifyContent(editorObject);
+        cartContent = klarnaNodeLib.modifyNode(editorObject);
 
         log.info(order_status)
         if ((order_status == "checkout_complete" || order_status == "created") && siteConfig.page_confirmation == currentPage._id) {
             editorObject.targetPath = "/orders";
         }
 
-        cartContent = klarnaNodeLib.modifyContent(editorObject);
+        cartContent = klarnaNodeLib.modifyNode(editorObject);
     }
 }
 
@@ -170,6 +155,8 @@ function getKlarnaCheckout(req){
 
         //klarna iframe
         klarnaReturn = JSON.parse(klarnaOrder.getOrderData());
+        
+        
     }
     log.info(klarnaReturn.id + " - "+ klarnaReturn.status);
 
@@ -203,7 +190,7 @@ function imageUrl(imageId, scale, format, quality){
 
         //When image/gif do not use imageUrl
         var imageUrl;
-        var result = klarnaNodeLib.get(imageId);
+        var result = contentLib.get({ key: imageId });
         if (checkNested(result, 'x', 'media', 'imageInfo', 'contentType') &&
             result['x']['media']['imageInfo']['contentType'] == "image/gif") {
             imageUrl = portal.pageUrl({path: result._path, type: imgOpts.type});
@@ -222,9 +209,17 @@ function imageUrl(imageId, scale, format, quality){
     }
 }
 
-function contentExists(id){
+function contentExists(id, branch){
     try{
-        var result = klarnaNodeLib.get(id);
+        var getObj = {
+            key: id
+        };
+
+        if(branch){
+            getObj.branch = branch;
+        }
+
+        var result = contentLib.get(getObj);
         return !!result;
     }catch(e){
         // log.error("98: "+(e.cause ? e.cause.message : e.message));

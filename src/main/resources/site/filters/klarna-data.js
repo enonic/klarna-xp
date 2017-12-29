@@ -16,9 +16,9 @@ exports.responseFilter = function(req, res) {
         }),
         msg: {
             shopping_cart: libs.i18n.localize({ key: 'shopping_cart' })
-        }
+        } 
     }
-
+    
     var metadata = libs.thymeleaf.render(view, params);
 
     var cookieString = libs.md5(new Date().valueOf());

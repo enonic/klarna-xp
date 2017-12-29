@@ -21,7 +21,7 @@
                             <img class="ui avatar image" data-th-src="${item.product.imageUrl}">
                             <div class="content">
                                 <a class="header" data-th-href="${item.product.url}">[[${item.quantity}]]x [[${item.product.displayName}]]</a>
-                                <div class="description">kr [[${item.price}]]</div>
+                                <div class="description">kr [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</div>
                             </div>
                         </div>
                     </div>
