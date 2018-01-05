@@ -44,7 +44,7 @@ exports.get = function (req) {
     });
 
     return {
-        body: thymeleaf.render(resolve('cart.html'), model)
+        body: thymeleaf.render(resolve('cart.html'), model)    	
     }
 };
 

@@ -234,7 +234,7 @@ function getCartItems(cart) {
                 if (product.data.image) {
                     product.imageUrl = portalLib.imageUrl({
                         id: product.data.image,
-                        scale: 'width(250)',
+                        scale: 'block(250,250)',
                         format: 'jpeg'
                     }).replace("/admin/tool/"+app.name+"/list-orders", "");
                 }

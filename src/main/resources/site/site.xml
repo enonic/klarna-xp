@@ -125,13 +125,13 @@
     
     <input name="merchant_id" type="TextLine">
       <label>Merchant ID</label>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <help-text></help-text>
     </input>
     
     <input name="secret_key" type="TextLine">
       <label>Merchant Secret Key</label>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <help-text></help-text>
     </input>
 

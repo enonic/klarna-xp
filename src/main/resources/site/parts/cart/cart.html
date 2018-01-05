@@ -1,40 +1,45 @@
-
 <div class="cart column cart-view">
 	<div class="cart-content">
 		<h3 class="ui header">
 			Shopping Cart
 		</h3>
 		<div data-th-remove="tag" th:if="${cart != null and not #lists.isEmpty(items)}">
-			<table class="ui table">
-				<thead>
-				<tr>
-					<th>Item(s)</th>
-					<th>Quantity</th>
-					<th>Price</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr data-th-each="item : ${items}">
-					<td>
-						<div class="itemBasket">
-							<a data-th-href="${item.product.url}">
-								<img data-th-if="${item.product.imageUrl}" data-th-src="${item.product.imageUrl}" class="smImage">
-							</a>
-							<p class="itemName"><a data-th-href="${item.product.url}">[[${item.product.displayName}]]</a></p>
-						</div>
-					</td>
-					<td>
-						<div class="formQtd">
-							<div class="inputQtd">
-								<input class="product-quantity cart-input no-spinners" type="number" min="1" data-th-attr="value=${item.quantity},data-klarna-cart-update=${item.updateQuantity}"/>
-								<i class="closeIcon" data-th-attr="data-klarna-cart-add=${item.removeFromCart}"></i>
-							</div>
-						</div>
-					</td>
-					<td>[[${currency}]] [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</td>
-				</tr>
-				</tbody>
-			</table>
+		
+			<div class="shopping-cart">
+				
+				<div class="column-labels">
+			        <label class="cart-product-image">Image</label>
+			        <label class="cart-product-details">Product</label>
+			        <label class="cart-product-price">Price</label>
+			        <label class="cart-product-quantity">Quantity</label>
+			        <label class="cart-product-removal">Remove</label>
+			    </div>
+			    
+			    <div class="cart-product" data-th-each="item : ${items}">
+			    	<div class="cart-product-image">
+			    		<a data-th-href="${item.product.url}">
+			            	<img data-th-if="${item.product.imageUrl}" data-th-src="${item.product.imageUrl}">
+		            	</a>
+			        </div>
+			        <div class="cart-product-details">
+			            <div class="cart-product-title">
+			            	<a data-th-href="${item.product.url}">[[${item.product.displayName}]]</a>
+		            	</div>
+			        </div>
+			        <div class="cart-product-price">[[${currency}]] [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</div>
+			        
+			        
+			        <div class="cart-product-quantity">
+			            <input class="product-quantity cart-input" type="number" min="1" data-th-attr="value=${item.quantity},data-klarna-cart-update=${item.updateQuantity}"/>
+			        </div>
+			       
+			        <div class="cart-product-removal">
+			            <button class="remove-product" data-th-attr="data-klarna-cart-add=${item.removeFromCart}">X</button>
+			        </div>
+			    </div>
+			    
+		    </div>
+
 			<div class="total">
 				<span>Total: </span>[[${totalPrice}]]
 			</div>
@@ -48,4 +53,4 @@
 			Empty cart <i class="shop icon"></i>
 		</div>
 	</div>
-</div>
+</div>  

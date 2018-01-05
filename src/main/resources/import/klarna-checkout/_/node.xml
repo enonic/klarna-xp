@@ -2,7 +2,7 @@
     <id>53bb65f8-a19c-4bf5-bc4e-5a5551c2384f</id>
     <childOrder>modifiedtime DESC</childOrder>
     <nodeType>content</nodeType>
-    <timestamp>2017-12-28T16:53:33.275Z</timestamp>
+    <timestamp>2018-01-05T13:09:45.932Z</timestamp>
     <inheritPermissions>false</inheritPermissions>
     <permissions>
         <principal key="role:cms.cm.app">
@@ -47,7 +47,7 @@
         <string name="displayName">Klarna Checkout</string>
         <string name="type">portal:site</string>
         <string name="owner">user:system:su</string>
-        <dateTime name="modifiedTime">2017-12-28T16:53:33.275Z</dateTime>
+        <dateTime name="modifiedTime">2018-01-05T13:09:45.932Z</dateTime>
         <string name="modifier">user:system:su</string>
         <string name="creator">user:system:su</string>
         <dateTime name="createdTime">2017-03-13T22:03:57.846Z</dateTime>
@@ -63,8 +63,8 @@
                 <property-set name="config">
                     <string name="purchase_country">NO</string>
                     <string name="purchase_currency">NOK</string>
-                    <string name="merchant_id">9038</string>
-                    <string name="secret_key">9oT8EtvrLQHyL1e</string>
+                    <string name="merchant_id"></string>
+                    <string name="secret_key"></string>
                     <reference name="page_terms">53bb65f8-a19c-4bf5-bc4e-5a5551c2384f</reference>
                     <reference name="page_checkout">a85a8dcb-d4ff-43ff-bf11-c2388e75e1c8</reference>
                     <reference name="page_confirmation">72592d84-5bca-4f0a-9fe5-2ef4dd2434eb</reference>
@@ -85,10 +85,6 @@
                     <double name="tax_rate">0.0</double>
                     <reference name="headerLogo">33b3e75d-1006-45f0-87a5-1a52bc6416ee</reference>
                 </property-set>
-            </property-set>
-            <property-set name="siteConfig">
-                <string name="applicationKey">com.enonic.app.contentviewer</string>
-                <property-set name="config"/>
             </property-set>
         </property-set>
         <property-set name="page">

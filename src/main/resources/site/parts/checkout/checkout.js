@@ -11,6 +11,9 @@ exports.get = function (req) {
 		returnContent = "<h3>Checkout part goes here.</h3>";
 	} else{
 		returnContent = klarna.getKlarnaCheckout(req).snippet;
+		
+		if (!returnContent)
+			returnContent = "<h3>Merchant ID and Key not set.</h3>"		
 	}
 	
     return {

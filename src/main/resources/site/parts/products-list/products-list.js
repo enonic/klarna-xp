@@ -129,7 +129,7 @@ function getProducts(config) {
 
             product.imageUrl = libs.portal.imageUrl({
                 id: productData.data.image,
-                scale: 'width(250)',
+            	scale: 'block(250,250)',
                 format: 'jpeg'
             });
             product.productViewUrl = libs.portal.pageUrl({

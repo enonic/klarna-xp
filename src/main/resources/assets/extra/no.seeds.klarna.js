@@ -39,6 +39,7 @@ $(function () {
     });
 
     $(".cart-view").on('change', '.product-quantity.cart-input', function (e) {
+    	
         e.preventDefault();
         var url = $(e.currentTarget).data('klarna-cart-update') + "&quantity="+$(this).val();
         $.get(url).done(function (data) {

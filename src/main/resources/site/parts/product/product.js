@@ -63,7 +63,7 @@ exports.get = function (req) {
 
     model.imageUrl = portal.imageUrl({
         id: model.data.image,
-        scale: 'width(250)',
+        scale: 'block(250,250)',
         format: 'jpeg'
     });
 

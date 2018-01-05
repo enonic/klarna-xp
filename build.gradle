@@ -22,9 +22,9 @@ apply plugin: "com.moowork.grunt"
 
 app {
     name = project.appName
-    displayName = project.displayName
-    vendorName = 'Enonic AS'
-    vendorUrl = 'http://enonic.com'
+    displayName = 'Klarna Checkout'
+    vendorName = 'Seeds'
+    vendorUrl = 'https://www.seeds.no'
 }
 
 dependencies {
