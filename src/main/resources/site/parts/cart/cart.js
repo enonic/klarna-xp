@@ -12,7 +12,7 @@ var currencyMap = {
 function getPrice(price){
     var siteConfig = portal.getSiteConfig();
 
-    var price = price;
+    var price = price ? price : 0;
 
     price = currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
     

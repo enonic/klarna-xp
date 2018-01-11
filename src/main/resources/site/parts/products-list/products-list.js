@@ -46,6 +46,8 @@ function getPrice(price){
     var siteConfig = libs.portal.getSiteConfig();
 
     var price = (price);
+    
+    price = price ? price : 0;
 
     price = conf.currencyMap[siteConfig.purchase_currency] + " " + price.toFixed(2);
     

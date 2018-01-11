@@ -291,8 +291,7 @@ function getCartItemsForOrder(cart) {
                 }
                 
                 items.push({
-                    //product: product,
-                	productId: product._id,
+                    productId: product._id,
                     productName: product.displayName,
                     price: price,
                     quantity: item.quantity
