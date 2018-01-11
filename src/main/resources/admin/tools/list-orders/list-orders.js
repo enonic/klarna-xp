@@ -58,7 +58,7 @@ function handleGet(req){
         ],
         faviconUrl: portalLib.assetUrl({path: "/img/application.svg"}),
         baseUrl: getUrl(req.params, "base"),
-        orders: cartLib.getOrders()
+        orders: cartLib.getOrders() ? cartLib.getOrders() : false 
     };
     
     params.menu = [];

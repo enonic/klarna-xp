@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        <div  data-th-each="order:${orders}" data-th-remove="tag">
+        <div  data-th-if="${orders}" data-th-each="order:${orders}" data-th-remove="tag">
             <tr>
                 <td class="ui center aligned content">[[${order.klarnaId}]]</td>
                 <td class="ui center aligned content" style="min-width: 100px;">
@@ -18,11 +18,12 @@
                 <td class="ui left aligned content" style="min-width: 450px;">
                     <div class="ui klarna list">
                         <div class="item" data-th-each="item:${order.items}">
-                            <img class="ui avatar image" data-th-src="${item.product.imageUrl}">
+                            <img class="ui avatar image" data-th-if="${item.imageUrl}" data-th-src="${item.imageUrl}">
                             <div class="content">
-                                <a class="header" data-th-href="${item.product.url}">[[${item.quantity}]]x [[${item.product.displayName}]]</a>
-                                <div class="description">kr [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</div>
-                            </div>
+                                <div class="header" data-th-if="${item.productUrl}" > [[${item.quantity}]]x <a data-th-href="${item.productUrl}">[[${item.productName}]] </a></div>
+                                <div class="header" data-th-if="!${item.productUrl}">[[${item.quantity}]]x [[${item.productName}]] <span style="color: red; font-weight: normal;">(product deleted)</span></div>
+                                <div data-th-if="${item.price}" class="description">kr [[${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}]]</div>
+                            </div>                            
                         </div>
                     </div>
                 </td>

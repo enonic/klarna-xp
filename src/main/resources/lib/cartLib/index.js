@@ -8,6 +8,7 @@ module.exports = {
     updateCartQuantity: updateCartQuantity,
     removeFromCart: removeFromCart,
     getCartItems: getCartItems,
+    getCartItemsForOrder: getCartItemsForOrder,
     archiveCart: archiveCart,
     createCart: createCart,
     getOrders: getOrders
@@ -229,14 +230,14 @@ function getCartItems(cart) {
             	product.url = portalLib.pageUrl({
                     id: product._id,
                     type: "absolute"
-                }).replace("/admin/tool/"+app.name+"/list-orders/klarna-checkout", "");
+                }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");
 
                 if (product.data.image) {
                     product.imageUrl = portalLib.imageUrl({
                         id: product.data.image,
                         scale: 'block(250,250)',
                         format: 'jpeg'
-                    }).replace("/admin/tool/"+app.name+"/list-orders", "");
+                    }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");
                 }
                 var price;
                 if(product.data.discount_rate){
@@ -247,6 +248,52 @@ function getCartItems(cart) {
                 
                 items.push({
                     product: product,
+                    price: price ? price : 0,
+                    quantity: item.quantity
+                });
+            }
+        });
+    }
+    
+    return items;
+}
+
+function getCartItemsForOrder(cart) {
+	
+	var items = [];
+    if (cart && cart.data.items) {
+        if (!Array.isArray(cart.data.items)) {
+            cart.data.items = [cart.data.items];
+        }
+        cart.data.items.forEach(function (item) {
+        	var product = contentLib.get({
+                key: item.product
+            });
+            
+            if(product) {
+            	product.url = portalLib.pageUrl({
+                    id: product._id,
+                    type: "absolute"
+                }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");
+
+                if (product.data.image) {
+                    product.imageUrl = portalLib.imageUrl({
+                        id: product.data.image,
+                        scale: 'block(250,250)',
+                        format: 'jpeg'
+                    }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");
+                }
+                var price;
+                if(product.data.discount_rate){
+                    price = (product.data.unit_price - (product.data.unit_price * (product.data.discount_rate/100))) * item.quantity
+                } else {
+                    price = product.data.unit_price * item.quantity;
+                }
+                
+                items.push({
+                    //product: product,
+                	productId: product._id,
+                    productName: product.displayName,
                     price: price,
                     quantity: item.quantity
                 });
@@ -269,19 +316,71 @@ function getOrders(){
     var orders = klarnaNodeLib.listOrders();
 
     shoppingCarts.forEach(function(el){
-        carts.push(getOrderModel(el));
+		carts.push(getOrderModel(el, 0));
     });
     
     orders.forEach(function(el){
-        carts.push(getOrderModel(el));        
+        carts.push(getOrderModel(el, 1));        
     });
 
     return carts;
 }
 
-function getOrderModel(orderNode){
+function getOrderModel(orderNode, cartMode){
     if(orderNode && orderNode.data){
-        var orderItems = getCartItems(orderNode);
+    	
+    	var product_id;
+    	var orderItems;
+    	
+    	if (orderNode.data.items.length) {
+    		orderItems = [];
+    		orderNode.data.items.forEach(function(el){
+    			orderItems.push(el);
+    		});    		
+    	}
+    	
+    	else{
+    		orderItems = [orderNode.data.items];
+    	}
+    	    	
+    	orderItems.forEach(function (el){
+    		
+    		if (cartMode) {// The cart has been converted to an order
+    			product_id = el.productId;
+    		}
+    		
+    		else {// It is still a shopping cart
+    			product_id = el.product;    			
+    		}
+    		
+    		var product = contentLib.get({
+                key: product_id
+            });
+    		
+    		if (product) {    		
+    			if (!cartMode){// It is still a shopping cart
+        			el.productName = product.displayName;
+        			el.price = (el.quantity)*(product.data.unit_price*((100-product.data.discount_rate)/100.0));
+        		}
+    			
+    			el.productUrl = portalLib.pageUrl({
+                    id: product_id,
+                    type: "absolute"
+                }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");    			
+    			
+    			var productImage = contentLib.get({
+                    key: product.data.image
+                });
+    			
+    			if (productImage) {    				
+    				el.imageUrl = portalLib.imageUrl({
+                        id: product.data.image,
+                        scale: 'block(250,250)',
+                        format: 'jpeg'
+                    }).replace("tool/"+app.name+"/list-orders", "portal/preview/draft");
+    			}
+    		}
+    	});
         
         var nodeObj = {
             createdTime: orderNode.createdTime,
@@ -289,6 +388,7 @@ function getOrderModel(orderNode){
             status: (orderNode.data.status.toUpperCase() == "CREATED") ? "ORDER_CREATED" : orderNode.data.status.toUpperCase(),
             items: orderItems
         };
+        
         return nodeObj;
     }
 }

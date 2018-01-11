@@ -19,7 +19,7 @@ function getKlarnaOrderId(filePath){
 function getContext(req) {
     var context = {};
     
-    log.info(req.cookies.JSESSIONID);
+    //log.info(req.cookies.JSESSIONID);
     context.cart = cartLib.getCartFromSession(req.cookies.JSESSIONID);
     
     context.cartItems = cartLib.getCartItems(context.cart);
@@ -35,7 +35,7 @@ function getCartContent(content_id, klarna_order_id){
     var site = portal.getSite();
     var queryString = "(_id = '"+content_id+"' " +
         "OR data.klarna_order_id = '"+klarna_order_id+"')";
-    log.info(queryString)
+    //log.info(queryString)
     var cartContent = klarnaNodeLib.query(queryString, app.name+":cart");
 
     return cartContent.hits[0];
@@ -46,6 +46,11 @@ function updateContext(req, klarna_order_id, order_status) {
     var siteConfig = portal.getSiteConfig();
     var context = getContext(req);
     var currentPage = portal.getContent();
+    
+    if (!order_status){
+    	return;
+    }    	    
+    
     if (context) {
         if (context.cart) {
             if (context.cart._id) {
@@ -55,6 +60,7 @@ function updateContext(req, klarna_order_id, order_status) {
     }
 
     var cartContent = getCartContent(content_id, klarna_order_id);
+    
     if(cartContent) {
         var editorObject = {
             id: cartContent._id,
@@ -66,9 +72,23 @@ function updateContext(req, klarna_order_id, order_status) {
         }
         cartContent = klarnaNodeLib.modifyNode(editorObject);
 
-        log.info(order_status)
+        //log.info(order_status)
         if ((order_status == "checkout_complete" || order_status == "created") && siteConfig.page_confirmation == currentPage._id) {
-            editorObject.targetPath = "/orders";
+        	
+        	var orderCartItems = cartLib.getCartItemsForOrder(cartContent);
+        	
+        	editorObject = {
+                id: cartContent._id,
+                targetPath: "/orders",
+                editor: function (c) {
+                    c.data.klarna_order_id = klarna_order_id;
+                    c.data.status = order_status;
+                    c.data.items = orderCartItems;
+                    return c;
+                }
+            }
+        	
+            //editorObject.targetPath = "/orders";
         }
 
         cartContent = klarnaNodeLib.modifyNode(editorObject);
@@ -89,7 +109,9 @@ function getTotalPrice(cartItems) {
     if (!cartItems) return 0;
     var totalPrice = 0;
     cartItems.forEach(function (item) {
-        totalPrice += item.price;
+    	
+    	if(item.price)
+    		totalPrice += item.price;
     });
     return totalPrice;
 }
@@ -133,10 +155,10 @@ function getKlarnaCheckout(req){
 
     var klarnaReturn;
     if(req.params.klarna_order_id){
-        var klarna_order_id = getKlarnaOrderId(req.params.klarna_order_id);
+    	var klarna_order_id = getKlarnaOrderId(req.params.klarna_order_id);
         klarnaReturn = JSON.parse(klarnaOrder.getOrderData(klarna_order_id));
     } else {
-        context.cartItems.forEach(function (item) {
+    	context.cartItems.forEach(function (item) {
             var unit_price = ((item.product.data.unit_price * 100).toFixed(0));
             var tax_rate = ((settings.tax_rate * 100).toFixed(0));
             var discount_rate = ((item.product.data.discount_rate * 100).toFixed(0));
@@ -155,10 +177,8 @@ function getKlarnaCheckout(req){
 
         //klarna iframe
         klarnaReturn = JSON.parse(klarnaOrder.getOrderData());
-        
-        
     }
-    log.info(klarnaReturn.id + " - "+ klarnaReturn.status);
+    //log.info(klarnaReturn.id + " - "+ klarnaReturn.status);
 
     updateContext(req, klarnaReturn.id, klarnaReturn.status);
     return klarnaReturn;
