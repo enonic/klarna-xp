@@ -2,7 +2,7 @@
     <id>53bb65f8-a19c-4bf5-bc4e-5a5551c2384f</id>
     <childOrder>modifiedtime DESC</childOrder>
     <nodeType>content</nodeType>
-    <timestamp>2018-01-05T13:09:45.932Z</timestamp>
+    <timestamp>2018-01-12T14:25:14.828Z</timestamp>
     <inheritPermissions>false</inheritPermissions>
     <permissions>
         <principal key="role:cms.cm.app">
@@ -47,7 +47,7 @@
         <string name="displayName">Klarna Checkout</string>
         <string name="type">portal:site</string>
         <string name="owner">user:system:su</string>
-        <dateTime name="modifiedTime">2018-01-05T13:09:45.932Z</dateTime>
+        <dateTime name="modifiedTime">2018-01-12T14:25:14.828Z</dateTime>
         <string name="modifier">user:system:su</string>
         <string name="creator">user:system:su</string>
         <dateTime name="createdTime">2017-03-13T22:03:57.846Z</dateTime>
@@ -81,9 +81,10 @@
                     <string name="address_line_1">Address Line 1</string>
                     <string name="address_line_2">Address Line 2</string>
                     <string name="copyright_notice_left">Copyright</string>
-                    <string name="copyright_notice_right">2017 Company Name</string>
+                    <string name="copyright_notice_right">2018 Company Name</string>
                     <double name="tax_rate">0.0</double>
                     <reference name="headerLogo">33b3e75d-1006-45f0-87a5-1a52bc6416ee</reference>
+                    <string name="klarnaMode">dev</string>
                 </property-set>
             </property-set>
         </property-set>

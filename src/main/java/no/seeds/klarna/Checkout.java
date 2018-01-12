@@ -19,6 +19,11 @@ public class Checkout {
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
     }
+    
+    private String klarnaMode;
+    public void setKlarnaMode(String klarnaMode) {
+        this.klarnaMode = klarnaMode;
+    }
 
     private String purchaseCountry;
 
@@ -77,11 +82,21 @@ public class Checkout {
         data.put("merchant", merchant);
 
         try {
-            IConnector connector = Connector.create(this.secretKey, IConnector.TEST_BASE_URL);
+        	String baseUrl;
+        	
+        	if (this.klarnaMode.equals("prod"))
+        		baseUrl = IConnector.BASE_URL;
+        		
+    		else
+    			baseUrl = IConnector.TEST_BASE_URL;
+    			
+            IConnector connector = Connector.create(this.secretKey, baseUrl);
+            
             Order order = new Order(connector);
             order.create(data);
-
-            order.fetch();
+			
+			order.fetch();
+            
 
             Map<String, Object> gui = (Map<String, Object>) order.get("gui");
             String snippet = (String) gui.get("snippet");
@@ -103,7 +118,16 @@ public class Checkout {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            IConnector connector = Connector.create(this.secretKey, IConnector.TEST_BASE_URL);
+        	String baseUrl;
+        	
+        	if (this.klarnaMode.equals("prod"))
+        		baseUrl = IConnector.BASE_URL;
+        		
+    		else
+    			baseUrl = IConnector.TEST_BASE_URL;
+    			
+            IConnector connector = Connector.create(this.secretKey, baseUrl);
+            
             Order order = new Order(connector, order_id);
             order.fetch();
 

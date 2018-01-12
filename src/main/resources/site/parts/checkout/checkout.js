@@ -13,7 +13,7 @@ exports.get = function (req) {
 		returnContent = klarna.getKlarnaCheckout(req).snippet;
 		
 		if (!returnContent)
-			returnContent = "<h3>Merchant ID and Key not set.</h3>"		
+			returnContent = "<h3>Invalid Merchant info. Please check your Klarna settings in the app config.</h3>"		
 	}
 	
     return {

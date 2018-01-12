@@ -154,8 +154,7 @@ function publish(key, branch) {
 	
 	var repo = connectKlarnaRepo();
     
-    log.info("**** Branch -> " + branch);
-    if (branch == 'master') {
+	if (branch == 'master') {
         repo.push({keys: [key], target: 'master'});
     }
 }

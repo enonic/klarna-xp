@@ -123,57 +123,75 @@
       </items>
     </field-set>
     
-    <input name="merchant_id" type="TextLine">
-      <label>Merchant ID</label>
-      <occurrences minimum="0" maximum="1"/>
-      <help-text></help-text>
-    </input>
+    <field-set name="klarnaSettings">
+    	<label>Klarna Settings</label>
+    	<items>
+    		<input name="klarnaMode" type="RadioButton">
+    		<label>Klarna Mode</label>
+    		<occurrences minimum="1" maximum="1"/>
+		      <help-text>Test credentials must be used when Development Mode is set.</help-text>
+		      <default>dev</default>
+		      <config>
+		        <option value="dev">Development Mode</option>
+		        <option value="prod">Production Mode</option>
+	          </config>
+    		</input>
+    	
+    		<input name="merchant_id" type="TextLine">
+		      <label>Merchant ID</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <help-text></help-text>
+		    </input>
+		    
+		    <input name="secret_key" type="TextLine">
+		      <label>Merchant Secret Key</label>
+		      <occurrences minimum="0" maximum="1"/>
+		      <help-text></help-text>
+		    </input>
+		
+		    <input name="purchase_country" type="RadioButton">
+		      <label>Purchase Country</label>
+		      <occurrences minimum="1" maximum="1"/>
+		      <help-text></help-text>
+		      <default>NO</default>
+		      <config>
+		        <option value="AU">Austria</option>
+		        <option value="DK">Denmark</option>
+		        <option value="FI">Finland</option>
+		        <option value="DE">Germany</option>
+		        <option value="NL">Netherlands</option>
+		        <option value="NO">Norway</option>
+		        <option value="SE">Sweden</option>
+		      </config>
+		    </input>
+		
+		    <input name="purchase_currency" type="RadioButton">
+		      <label>Purchase Currency</label>
+		      <occurrences minimum="1" maximum="1"/>
+		      <help-text></help-text>
+		      <default>NOK</default>
+		      <config>
+		        <option value="EUR">Euro</option>
+		        <option value="DKK">Danish Crowns (DKK)</option>
+		        <option value="NOK">Norwegian Crowns (NOK)</option>
+		        <option value="SEK">Swedish Crowns (SEK)</option>
+		      </config>
+		    </input>
+		    
+		    <input type="Double" name="tax_rate">
+		    	<label>Tax Rate (%)</label>
+		        <help-text>Percentage of tax rate</help-text>
+		        <default>0</default>
+		        <occurrences minimum="1" maximum="1"/>
+		        <config>
+		           	<min>0</min>
+				    <max>100</max>
+			    </config>
+			</input>
+    	</items>
+    </field-set>
     
-    <input name="secret_key" type="TextLine">
-      <label>Merchant Secret Key</label>
-      <occurrences minimum="0" maximum="1"/>
-      <help-text></help-text>
-    </input>
-
-    <input name="purchase_country" type="RadioButton">
-      <label>Purchase Country</label>
-      <occurrences minimum="1" maximum="1"/>
-      <help-text></help-text>
-      <default>NO</default>
-      <config>
-        <option value="AU">Austria</option>
-        <option value="DK">Denmark</option>
-        <option value="FI">Finland</option>
-        <option value="DE">Germany</option>
-        <option value="NL">Netherlands</option>
-        <option value="NO">Norway</option>
-        <option value="SE">Sweden</option>
-      </config>
-    </input>
-
-    <input name="purchase_currency" type="RadioButton">
-      <label>Purchase Currency</label>
-      <occurrences minimum="1" maximum="1"/>
-      <help-text></help-text>
-      <default>NOK</default>
-      <config>
-        <option value="EUR">Euro</option>
-        <option value="DKK">Danish Crowns (DKK)</option>
-        <option value="NOK">Norwegian Crowns (NOK)</option>
-        <option value="SEK">Swedish Crowns (SEK)</option>
-      </config>
-    </input>
     
-    <input type="Double" name="tax_rate">
-    	<label>Tax Rate (%)</label>
-        <help-text>Percentage of tax rate</help-text>
-        <default>0</default>
-        <occurrences minimum="1" maximum="1"/>
-        <config>
-           	<min>0</min>
-		    <max>100</max>
-	    </config>
-	</input>
 	
     <input name="page_terms" type="ContentSelector">
       <label>Terms Page</label>

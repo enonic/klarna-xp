@@ -149,6 +149,7 @@ function getKlarnaCheckout(req){
 
     klarnaOrder.setMerchant(__.toScriptValue(merchant));
     klarnaOrder.setSecretKey(settings.secret_key);
+    klarnaOrder.setKlarnaMode(settings.klarnaMode);
     klarnaOrder.setLocale("nb-no");
     klarnaOrder.setPurchaseCountry(settings.purchase_country);
     klarnaOrder.setPurchaseCurrency(settings.purchase_currency);
