@@ -49,32 +49,25 @@
 			</div>
 		</div>
 	</nav>
+	
 	<main class="pusher">
 		<div class="full height body" style="padding-top: 0;">
-			<div data-portal-region="main">
-				<!--REPLACE-->
-				<div class="ui stackable container very relaxed grid">
-					<div class="column" style="padding-top: 0 !important;">
-						<div class="xp-region" data-th-if="${!isFragment}">
-							<div data-th-if="${mainRegion}" data-th-remove="tag">
-								<div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
-									<div data-portal-component="${component.path}" data-th-remove="tag"></div>									
-								</div>
-							</div>
-						</div>
-						<div class="field hidden" id="loading">
-							<div class="ui active inverted dimmer">
-								<div class="ui text loader">Loading</div>
-							</div>
-							<p></p>
-						</div>
-					</div>
+			<div class="ui stackable container very relaxed grid">
+				<div class="column" style="padding-top: 0 !important;">
+					
+					<div data-th-if="${mainRegion}" data-portal-region="main">
+				        <div data-th-each="component : ${mainRegion.components}" data-th-remove="tag">
+				            <div data-portal-component="${component.path}" data-th-remove="tag" />
+				        </div>
+				    </div>
+					
 				</div>
 			</div>
+		
 		</div>
-
-
 	</main>
+	
+	
 	<footer class="ui vertical footer segment" data-th-if="${colorTheme}" data-th-style="${colorTheme.backgroundColorString}">
 		<div class="ui container stackable two column grid">
 			<div class="column">
