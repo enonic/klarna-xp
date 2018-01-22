@@ -137,9 +137,11 @@ function modifyNode(params) {
             		type: "base:folder"
             	});
             }
-        	
+            
+            retrievedNode = repo.get(params.id);
+            
             modifiedContent = repo.move({
-                source: params.id,
+                source: retrievedNode._path,
                 target: params.targetPath + "/" + modifiedContent._name
             });
         }
