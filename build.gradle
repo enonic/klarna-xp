@@ -78,9 +78,9 @@ bintray {
     configurations = ['archives']
     publish = true
     pkg {
-        repo = 'maven'
+        repo = 'enonic'
         name = 'klarna'
-        userOrg = 'enonic'
+        userOrg = 'seeds'
         licenses = ['GPL-3.0']
         vcsUrl = 'https://github.com/seeds/klarna-xp.git'
         version {
