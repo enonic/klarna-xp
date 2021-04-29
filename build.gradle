@@ -11,7 +11,7 @@ app {
     displayName = 'Klarna Checkout'
     vendorName = 'Seeds'
     vendorUrl = 'https://www.seeds.no'
-    systemVersion = "${version}"
+    systemVersion = "${xpVersion}"
 }
 
 dependencies {
